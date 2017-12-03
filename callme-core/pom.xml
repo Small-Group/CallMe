@@ -11,5 +11,8 @@
 
     <artifactId>callme-core</artifactId>
 
+    <dependencies>
+
+    </dependencies>
 
 </project>

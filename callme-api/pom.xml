@@ -11,5 +11,12 @@
 
     <artifactId>callme-api</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.small.group.sfy</groupId>
+            <artifactId>callme-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>
