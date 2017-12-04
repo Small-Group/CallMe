@@ -101,6 +101,45 @@ public class UserRest {
         return ReturnUtil.error("未知错误！");
     }
 
+    @PostMapping(name = "/updateUserInfo")
+    public JsonNode updateUserInfo(@RequestHeader(name = "token") String token,
+                                   @RequestBody String dataJson) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.readTree(dataJson);
+            String userName = jsonNode.path("userName").asText();
+            if (checkToken(userName, token)) {
+                UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
+                userInfoService.save(POJOHandle.handleUserInfo(dataJson, userInfo));
+                return ReturnUtil.success();
+            }
+            return ReturnUtil.error("未知错误！");
+        } catch (Exception e) {
+            return ReturnUtil.error(e.toString());
+        }
+    }
+
+    @PostMapping(name = "/updatePassWord")
+    public JsonNode updatePassWord(@RequestHeader(name = "token") String token,
+                                   @RequestBody String dataJson) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.readTree(dataJson);
+            String userName = jsonNode.path("userName").asText();
+            String passWord = jsonNode.path("passWord").asText();
+            if (checkToken(userName, token)) {
+                User user = userService.findUserByUserName(userName);
+                user.setPassWord(passWord);
+                user.setUpdateTime(new Date());
+                userService.save(user);
+                return ReturnUtil.success();
+            }
+            return ReturnUtil.error("未知错误！");
+        } catch (Exception e) {
+            return ReturnUtil.error(e.toString());
+        }
+    }
+
     @GetMapping(name = "/check/{userName}")
     public JsonNode checkUserName(@Param("userName") String userName) {
         if (!existUserName(userName)) {

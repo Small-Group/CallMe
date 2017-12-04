@@ -35,7 +35,7 @@ public class UserInfo implements Serializable {
     private String level;
 
     @Column(name = "point")
-    private String point;
+    private Integer point;
 
     @Column(name = "land_line")
     private String landLine;
@@ -126,11 +126,11 @@ public class UserInfo implements Serializable {
         this.level = level;
     }
 
-    public String getPoint() {
+    public Integer getPoint() {
         return point;
     }
 
-    public void setPoint(String point) {
+    public void setPoint(Integer point) {
         this.point = point;
     }
 

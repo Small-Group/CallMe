@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.small.group.sfy.domain.user.UserInfo;
 
+import java.util.Date;
+
 /**
  * Created by yq on 2017/12/4.
  */
@@ -30,6 +32,28 @@ public class POJOHandle {
         objectNode.put("school", userInfo.getSchool());
         objectNode.put("remark", userInfo.getRemark());
         return objectNode;
+    }
+
+    public static UserInfo handleUserInfo(String dataJson,UserInfo userInfo) throws Exception{
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree(dataJson);
+        userInfo.setNickName(jsonNode.path("nickName").asText());
+        userInfo.setName(jsonNode.path("name").asText());
+        userInfo.setPortrait(jsonNode.path("portrait").asText());
+        userInfo.setSex(jsonNode.path("sex").asText());
+        userInfo.setLevel(jsonNode.path("level").asText());
+        userInfo.setPoint(jsonNode.path("point").asInt());
+        userInfo.setLandLine(jsonNode.path("landLine").asText());
+        userInfo.setPhone(jsonNode.path("phone").asText());
+        userInfo.setQq(jsonNode.path("qq").asText());
+        userInfo.setWeChat(jsonNode.path("weChat").asText());
+        userInfo.setEmail(jsonNode.path("email").asText());
+        userInfo.setCity(jsonNode.path("city").asText());
+        userInfo.setCompany(jsonNode.path("company").asText());
+        userInfo.setSchool(jsonNode.path("school").asText());
+        userInfo.setRemark(jsonNode.path("remark").asText());
+        userInfo.setUpdateTime(new Date());
+        return userInfo;
     }
 
 }
