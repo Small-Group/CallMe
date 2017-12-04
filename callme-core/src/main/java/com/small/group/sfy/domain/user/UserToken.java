@@ -18,7 +18,7 @@ public class UserToken implements Serializable {
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
-    @Column(name = "token", nullable = false)
+    @Column(name = "token")
     private String token;
 
     public Integer getId() {

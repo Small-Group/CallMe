@@ -18,6 +18,10 @@ public class UserTokenService {
         userTokenRepository.save(userToken);
     }
 
+    public void delete(UserToken userToken) {
+        userTokenRepository.delete(userToken);
+    }
+
     public UserToken findUserTokenByUserName(String userName) {
         return userTokenRepository.findUserTokenByUserName(userName);
     }

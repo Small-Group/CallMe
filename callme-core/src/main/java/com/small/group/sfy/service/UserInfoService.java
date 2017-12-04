@@ -18,6 +18,10 @@ public class UserInfoService {
         userInfoRepository.save(userInfo);
     }
 
+    public void delete(UserInfo userInfo) {
+        userInfoRepository.delete(userInfo);
+    }
+
     public UserInfo findUserInfoByUserName(String userName) {
         return userInfoRepository.findUserInfoByUserName(userName);
     }

@@ -55,6 +55,9 @@ public class UserRest {
                 userInfo.setCreateTime(new Date());
                 userInfo.setUpdateTime(new Date());
                 userInfoService.save(userInfo);
+                UserToken userToken = new UserToken();
+                userToken.setUserName(userName);
+                userTokenService.save(userToken);
             } else {
                 return ReturnUtil.error("用户名已存在！");
             }
@@ -75,8 +78,7 @@ public class UserRest {
                 String token = UUID.randomUUID().toString();
                 User user = userService.findUserByUserName(userName);
                 if (user.getPassWord().equals(passWord)) {
-                    UserToken userToken = new UserToken();
-                    userToken.setUserName(userName);
+                    UserToken userToken = userTokenService.findUserTokenByUserName(userName);
                     userToken.setToken(token);
                     userTokenService.save(userToken);
                     return ReturnUtil.success(mapper.createObjectNode().put("token", token));
@@ -137,6 +139,22 @@ public class UserRest {
             return ReturnUtil.error("未知错误！");
         } catch (Exception e) {
             return ReturnUtil.error(e.toString());
+        }
+    }
+
+    @GetMapping(name = "/delete/{userName}")
+    public JsonNode deleteUser(@RequestHeader(name = "token") String token,
+                               @Param("userName") String userName) {
+        if (checkToken(userName, token)) {
+            User user = userService.findUserByUserName(userName);
+            UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
+            UserToken userToken = userTokenService.findUserTokenByUserName(userName);
+            userTokenService.delete(userToken);
+            userInfoService.delete(userInfo);
+            userService.delete(user);
+            return ReturnUtil.success();
+        } else {
+            return ReturnUtil.error("未知错误！");
         }
     }
 
