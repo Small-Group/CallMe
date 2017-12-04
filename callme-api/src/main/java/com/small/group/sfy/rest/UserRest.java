@@ -8,6 +8,7 @@ import com.small.group.sfy.domain.user.UserToken;
 import com.small.group.sfy.service.UserInfoService;
 import com.small.group.sfy.service.UserService;
 import com.small.group.sfy.service.UserTokenService;
+import com.small.group.sfy.util.POJOHander;
 import com.small.group.sfy.util.ReturnUtil;
 import com.small.group.sfy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class UserRest {
             JsonNode jsonNode = mapper.readTree(dataJson);
             String userName = jsonNode.path("userName").asText();
             String passWord = jsonNode.path("passWord").asText();
-            if(!existUserName(userName)){
+            if (!existUserName(userName)) {
                 User user = new User();
                 user.setUserName(userName);
                 user.setPassWord(passWord);
@@ -54,13 +55,13 @@ public class UserRest {
                 userInfo.setCreateTime(new Date());
                 userInfo.setUpdateTime(new Date());
                 userInfoService.save(userInfo);
-            }else{
+            } else {
                 return ReturnUtil.error("用户名已存在！");
             }
         } catch (Exception e) {
             return ReturnUtil.error(e.toString());
         }
-       return ReturnUtil.success();
+        return ReturnUtil.success();
     }
 
     @PostMapping(name = "/login")
@@ -70,19 +71,19 @@ public class UserRest {
             JsonNode jsonNode = mapper.readTree(dataJson);
             String userName = jsonNode.path("userName").asText();
             String passWord = jsonNode.path("passWord").asText();
-            if(existUserName(userName)){
+            if (existUserName(userName)) {
                 String token = UUID.randomUUID().toString();
                 User user = userService.findUserByUserName(userName);
-                if(user.getPassWord().equals(passWord)){
+                if (user.getPassWord().equals(passWord)) {
                     UserToken userToken = new UserToken();
                     userToken.setUserName(userName);
                     userToken.setToken(token);
                     userTokenService.save(userToken);
-                    return ReturnUtil.success(token);
-                }else{
+                    return ReturnUtil.success(mapper.createObjectNode().put("token", token));
+                } else {
                     return ReturnUtil.error("密码错误！");
                 }
-            }else{
+            } else {
                 return ReturnUtil.error("用户名不存在！");
             }
         } catch (Exception e) {
@@ -90,28 +91,39 @@ public class UserRest {
         }
     }
 
-//    @GetMapping(name = "/findUser/{userName}")
-//    public JsonNode findUser(@RequestHeader(name = "token" ) String token,
-//                             @Param("userName") String userName){
-//
-//
-//    }
+    @GetMapping(name = "/findUserInfo/{userName}")
+    public JsonNode findUserInfo(@RequestHeader(name = "token") String token,
+                                 @Param("userName") String userName) {
+        if (checkToken(userName, token)) {
+            UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
+            return ReturnUtil.success(POJOHander.handerUserInfo(userInfo));
+        }
+        return ReturnUtil.error("未知错误！");
+    }
 
     @GetMapping(name = "/check/{userName}")
     public JsonNode checkUserName(@Param("userName") String userName) {
-        if(!existUserName(userName)){
+        if (!existUserName(userName)) {
             return ReturnUtil.success();
-        }else{
+        } else {
             return ReturnUtil.error("用户名已被占用！");
         }
     }
 
-    private boolean existUserName(String userName){
-        if(StringUtil.isNotNull(userName)){
+    private boolean existUserName(String userName) {
+        if (StringUtil.isNotNull(userName)) {
             User user = userService.findUserByUserName(userName);
-            if(user != null){
+            if (user != null) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    private boolean checkToken(String userName, String token) {
+        UserToken userToken = userTokenService.findUserTokenByUserName(userName);
+        if (userToken != null && userToken.getToken().equals(token)) {
+            return true;
         }
         return false;
     }

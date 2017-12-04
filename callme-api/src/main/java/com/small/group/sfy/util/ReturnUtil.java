@@ -17,12 +17,12 @@ public class ReturnUtil {
         return objectNode;
     }
 
-    public static JsonNode success(String token) {
+    public static JsonNode success(JsonNode jsonNode) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode = mapper.createObjectNode();
         objectNode.put("code", 0);
         objectNode.put("msg", "");
-        objectNode.put("token", token);
+        objectNode.put("data", jsonNode);
         return objectNode;
     }
 
