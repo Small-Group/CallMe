@@ -35,7 +35,7 @@ public class UserRest {
     @Autowired
     private UserTokenService userTokenService;
 
-    @PostMapping(name = "/register")
+    @PostMapping(value = "/register")
     public JsonNode register(@RequestBody String dataJson) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -67,7 +67,7 @@ public class UserRest {
         return ReturnUtil.success();
     }
 
-    @PostMapping(name = "/login")
+    @PostMapping(value = "/login")
     public JsonNode login(@RequestBody String dataJson) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -93,7 +93,7 @@ public class UserRest {
         }
     }
 
-    @GetMapping(name = "/findUserInfo/{userName}")
+    @GetMapping(value = "/findUserInfo/{userName}")
     public JsonNode findUserInfo(@RequestHeader(name = "token") String token,
                                  @Param("userName") String userName) {
         if (checkToken(userName, token)) {
@@ -103,7 +103,7 @@ public class UserRest {
         return ReturnUtil.error("未知错误！");
     }
 
-    @PostMapping(name = "/updateUserInfo")
+    @PostMapping(value = "/updateUserInfo")
     public JsonNode updateUserInfo(@RequestHeader(name = "token") String token,
                                    @RequestBody String dataJson) {
         try {
@@ -121,7 +121,7 @@ public class UserRest {
         }
     }
 
-    @PostMapping(name = "/updatePassWord")
+    @PostMapping(value = "/updatePassWord")
     public JsonNode updatePassWord(@RequestHeader(name = "token") String token,
                                    @RequestBody String dataJson) {
         try {
@@ -142,7 +142,7 @@ public class UserRest {
         }
     }
 
-    @GetMapping(name = "/delete/{userName}")
+    @GetMapping(value = "/delete/{userName}")
     public JsonNode deleteUser(@RequestHeader(name = "token") String token,
                                @Param("userName") String userName) {
         if (checkToken(userName, token)) {
@@ -158,7 +158,7 @@ public class UserRest {
         }
     }
 
-    @GetMapping(name = "/check/{userName}")
+    @GetMapping(value = "/check/{userName}")
     public JsonNode checkUserName(@Param("userName") String userName) {
         if (!existUserName(userName)) {
             return ReturnUtil.success();
