@@ -2,43 +2,117 @@ package com.small.group.sfy.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.small.group.sfy.domain.user.User;
+import com.small.group.sfy.domain.user.UserInfo;
+import com.small.group.sfy.domain.user.UserToken;
+import com.small.group.sfy.service.UserInfoService;
 import com.small.group.sfy.service.UserService;
+import com.small.group.sfy.service.UserTokenService;
+import com.small.group.sfy.util.ReturnUtil;
+import com.small.group.sfy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Date;
+import java.util.UUID;
 
 
 /**
  * Created by yq on 2017/12/3.
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserRest {
 
     @Autowired
     private UserService userService;
 
-//    @PostMapping
-//    public JsonNode register(@RequestBody String dataJson){
+    @Autowired
+    private UserInfoService userInfoService;
+
+    @Autowired
+    private UserTokenService userTokenService;
+
+    @PostMapping(name = "/register")
+    public JsonNode register(@RequestBody String dataJson) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = mapper.readTree(dataJson);
+            String userName = jsonNode.path("userName").asText();
+            String passWord = jsonNode.path("passWord").asText();
+            if(!existUserName(userName)){
+                User user = new User();
+                user.setUserName(userName);
+                user.setPassWord(passWord);
+                user.setCreateTime(new Date());
+                user.setUpdateTime(new Date());
+                userService.save(user);
+                UserInfo userInfo = new UserInfo();
+                userInfo.setUserName(userName);
+                userInfo.setPortrait("url:www.baidu.com");
+                userInfo.setCreateTime(new Date());
+                userInfo.setUpdateTime(new Date());
+                userInfoService.save(userInfo);
+            }else{
+                return ReturnUtil.error("用户名已存在！");
+            }
+        } catch (Exception e) {
+            return ReturnUtil.error(e.toString());
+        }
+       return ReturnUtil.success();
+    }
+
+    @PostMapping(name = "/login")
+    public JsonNode login(@RequestBody String dataJson) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = mapper.readTree(dataJson);
+            String userName = jsonNode.path("userName").asText();
+            String passWord = jsonNode.path("passWord").asText();
+            if(existUserName(userName)){
+                String token = UUID.randomUUID().toString();
+                User user = userService.findUserByUserName(userName);
+                if(user.getPassWord().equals(passWord)){
+                    UserToken userToken = new UserToken();
+                    userToken.setUserName(userName);
+                    userToken.setToken(token);
+                    userTokenService.save(userToken);
+                    return ReturnUtil.success(token);
+                }else{
+                    return ReturnUtil.error("密码错误！");
+                }
+            }else{
+                return ReturnUtil.error("用户名不存在！");
+            }
+        } catch (Exception e) {
+            return ReturnUtil.error(e.toString());
+        }
+    }
+
+//    @GetMapping(name = "/findUser/{userName}")
+//    public JsonNode findUser(@RequestHeader(name = "token" ) String token,
+//                             @Param("userName") String userName){
+//
+//
 //    }
 
-    @GetMapping()
-    public JsonNode findUser() {
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode arrayNode = mapper.createArrayNode();
-        List<User> userList = userService.findAllUser();
-        for (User user : userList) {
-            ObjectNode objectNode = mapper.createObjectNode();
-            objectNode.put("userName", user.getUserName());
-            objectNode.put("passWord", user.getPassWord());
-            arrayNode.add(objectNode);
+    @GetMapping(name = "/check/{userName}")
+    public JsonNode checkUserName(@Param("userName") String userName) {
+        if(!existUserName(userName)){
+            return ReturnUtil.success();
+        }else{
+            return ReturnUtil.error("用户名已被占用！");
         }
-        return arrayNode;
+    }
+
+    private boolean existUserName(String userName){
+        if(StringUtil.isNotNull(userName)){
+            User user = userService.findUserByUserName(userName);
+            if(user != null){
+                return true;
+            }
+        }
+        return false;
     }
 }
