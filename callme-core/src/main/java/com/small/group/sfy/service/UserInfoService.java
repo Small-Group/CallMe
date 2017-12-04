@@ -14,7 +14,11 @@ public class UserInfoService {
     @Autowired
     UserInfoRepository userInfoRepository;
 
-    public void save(UserInfo userInfo){
+    public void save(UserInfo userInfo) {
         userInfoRepository.save(userInfo);
+    }
+
+    public UserInfo findUserInfoByUserName(String userName) {
+        return userInfoRepository.findUserInfoByUserName(userName);
     }
 }

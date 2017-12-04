@@ -16,7 +16,7 @@ public class UserInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "user_name",nullable = false,unique = true)
+    @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
     @Column(name = "nick_name")
@@ -64,10 +64,10 @@ public class UserInfo implements Serializable {
     @Column(name = "remark")
     private String remark;
 
-    @Column(name = "create_time",nullable = false)
+    @Column(name = "create_time", nullable = false)
     private Date createTime;
 
-    @Column(name = "update_time",nullable = false)
+    @Column(name = "update_time", nullable = false)
     private Date updateTime;
 
     public Integer getId() {

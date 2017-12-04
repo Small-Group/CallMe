@@ -5,8 +5,6 @@ import com.small.group.sfy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * Created by yq on 2017/12/3.
  */
@@ -16,16 +14,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public void save(User user){
+    public void save(User user) {
         userRepository.save(user);
     }
 
-    public List<User> findAllUser(){
-      return  userRepository.findAll();
-    }
-
-    public User findUserByUserName(String userName){
-        return  userRepository.findUserByUserName(userName);
+    public User findUserByUserName(String userName) {
+        return userRepository.findUserByUserName(userName);
     }
 
 }

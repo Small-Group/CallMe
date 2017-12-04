@@ -14,7 +14,11 @@ public class UserTokenService {
     @Autowired
     UserTokenRepository userTokenRepository;
 
-    public void save(UserToken userToken){
+    public void save(UserToken userToken) {
         userTokenRepository.save(userToken);
+    }
+
+    public UserToken findUserTokenByUserName(String userName) {
+        return userTokenRepository.findUserTokenByUserName(userName);
     }
 }

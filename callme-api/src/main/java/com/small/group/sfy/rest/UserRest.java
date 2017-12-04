@@ -8,7 +8,7 @@ import com.small.group.sfy.domain.user.UserToken;
 import com.small.group.sfy.service.UserInfoService;
 import com.small.group.sfy.service.UserService;
 import com.small.group.sfy.service.UserTokenService;
-import com.small.group.sfy.util.POJOHander;
+import com.small.group.sfy.util.POJOHandle;
 import com.small.group.sfy.util.ReturnUtil;
 import com.small.group.sfy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +96,7 @@ public class UserRest {
                                  @Param("userName") String userName) {
         if (checkToken(userName, token)) {
             UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
-            return ReturnUtil.success(POJOHander.handerUserInfo(userInfo));
+            return ReturnUtil.success(POJOHandle.handleUserInfo(userInfo));
         }
         return ReturnUtil.error("未知错误！");
     }

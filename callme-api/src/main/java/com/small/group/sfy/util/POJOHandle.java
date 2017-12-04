@@ -8,9 +8,9 @@ import com.small.group.sfy.domain.user.UserInfo;
 /**
  * Created by yq on 2017/12/4.
  */
-public class POJOHander {
+public class POJOHandle {
 
-    public static JsonNode handerUserInfo(UserInfo userInfo) {
+    public static JsonNode handleUserInfo(UserInfo userInfo) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode = mapper.createObjectNode();
         objectNode.put("userName", userInfo.getUserName());
@@ -31,4 +31,5 @@ public class POJOHander {
         objectNode.put("remark", userInfo.getRemark());
         return objectNode;
     }
+
 }

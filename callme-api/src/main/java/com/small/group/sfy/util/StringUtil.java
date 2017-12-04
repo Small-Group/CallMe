@@ -12,4 +12,5 @@ public class StringUtil {
     public static boolean isNotNull(String str) {
         return !isNull(str);
     }
+
 }
