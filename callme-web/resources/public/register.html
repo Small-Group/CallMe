@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>圈子-注册 </title>
+	<meta charset="utf-8">
+	<link href="css/home.css?v=2" rel="stylesheet" type="text/css"/>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+			integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+			crossorigin="anonymous"></script>
+	<!--login js-->
+	<script src="js/register.js"></script>
+	<!--表单验证-->
+	<script src="js/jquery.validate.min.js"></script>
+
+	<style>
+		label.error{
+			color: red;//设置校验字体颜色
+		}
+	</style>
+</head>
+
+<body>
+
+<div class="wrap">
+	<div class="banner-show" id="js_ban_content">
+		<div class="cell bns-02">
+			<div class="con">
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="register-box">
+			<div class="reg-slogan">
+				<h1>新用户注册</h1>
+			</div>
+			<br>
+			<br>
+			<form id="registerForm" class="form-horizontal">
+				<div class="form-group">
+					<label for="userName" class="col-sm-3 control-label">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
+					<div class="col-sm-7" style="height: 59px">
+						<input type="text" class="form-control" id="userName" name="userName">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="nickName" class="col-sm-3 control-label">用户昵称</label>
+					<div class="col-sm-7" style="height: 59px">
+						<input type="text" class="form-control" id="nickName" name="nickName">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="passWord" class="col-sm-3 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+					<div class="col-sm-7" style="height: 59px">
+						<input type="password" class="form-control" id="passWord" name="passWord">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="confirmPassWord" class="col-sm-3 control-label">确认密码</label>
+					<div class="col-sm-7" style="height: 59px">
+						<input type="password" class="form-control" id="confirmPassWord" name="confirmPassWord">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="reg-form" id="js-form-mobile">
+						<div class="bottom">
+							<button id="login_btn" style="height: 50px;width: 300px;margin-left: 50px" class="button btn-green">立即注册</button>
+
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="footer">
+	<div class="con">
+		<div class="copy-right">
+			<div class="cell">
+				<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+					<p>适用浏览器：IE8、360、FireFox、Chrome、Safari、Opera、傲游、搜狗、世界之窗. </p>
+					 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

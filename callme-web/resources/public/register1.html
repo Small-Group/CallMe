@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>jquery带登录注册幻灯片代码 </title>
+    <meta charset="utf-8">
+    <link href="css/home.css?v=2" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <!--login js-->
+    <script src="../js/login.js"></script>
+
+</head>
+
+<body>
+
+<div class="wrap">
+    <div class="banner-show" id="js_ban_content">
+
+        <div class="cell bns-02">
+            <div class="con"></div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="register-box">
+            <div class="reg-slogan">
+                <h1>新用户注册</h1>
+            </div>
+            <br>
+            <br>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="userName" class="col-sm-2 control-label">账号</label>
+                    <div class="col-sm-4">
+                        <input type="email" class="form-control" id="userName">
+                    </div>
+                    <label for="nickName" class="col-sm-2 control-label">用户昵称</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="nickName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="inputPassword3">
+                    </div>
+                    <label for="inputPassword4" class="col-sm-2 control-label">确认密码</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="inputPassword4">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="school" class="col-sm-2 control-label">学校</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="school">
+                    </div>
+                    <label for="sexRadio1" class="col-sm-2 control-label">性别</label>
+                    <div class="col-sm-4">
+                        <label class="radio-inline">
+                            <input type="radio" name="sex" id="sexRadio1" value="option1"> 男
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="sex" id="sexRadio2" value="option2"> 女
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="col-sm-2 control-label">手机</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="phone">
+                    </div>
+                    <label for="landLine" class="col-sm-2 control-label">固定电话</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="landLine">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="qq" class="col-sm-2 control-label">QQ</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="qq">
+                    </div>
+                    <label for="landLine" class="col-sm-2 control-label">微信</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="wechat">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="company" class="col-sm-2 control-label">公司</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="company">
+                    </div>
+                    <label for="email" class="col-sm-2 control-label">邮箱</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="reg-form" id="js-form-mobile">
+                        <div class="bottom">
+                            <button id="login_btn" style="height: 50px;width: 300px;" class="button btn-green" onclick="loginSubmit()">立即注册</button>
+                    </div>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="footer">
+
+</div>
+
+</body>
+
+</html>

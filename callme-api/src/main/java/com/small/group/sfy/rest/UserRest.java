@@ -36,7 +36,7 @@ public class UserRest {
     private UserTokenService userTokenService;
 
     @PostMapping(value = "/register")
-    public JsonNode register(@RequestBody String dataJson) {
+    public JsonNode register( @RequestBody String dataJson) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             JsonNode jsonNode = mapper.readTree(dataJson);
@@ -158,7 +158,7 @@ public class UserRest {
         }
     }
 
-    @GetMapping(value = "/check/{userName}")
+    @GetMapping(value = "/check")
     public JsonNode checkUserName(@Param("userName") String userName) {
         if (!existUserName(userName)) {
             return ReturnUtil.success();
