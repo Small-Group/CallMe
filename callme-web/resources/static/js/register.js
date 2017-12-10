@@ -1,6 +1,5 @@
 $().ready(function() {
 // 在键盘按下并释放及提交后验证提交表单
-
     $("#registerForm").validate({
         submitHandler:function(form){
             registerSubmit();
@@ -118,7 +117,7 @@ function registerSubmit() {
         }
     })
 }
-function loginSubmit() {
+function updateInfoSubmit() {
     var user = new Object();
     user.userName = $("#userName").val();
     user.passWord = $("#passWord").val();

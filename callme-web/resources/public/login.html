@@ -2,16 +2,28 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=gb2312"/>
-    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>鐧诲綍</title>
     <link rel="stylesheet" href="css/jq22.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/login.js"></script>
+    <script>
+        $(function () {
+            $('#login #password').focus(function () {
+                $('#owl-login').addClass('password');
+            }).blur(function () {
+                $('#owl-login').removeClass('password');
+            });
+        });
+    </script>
+
 </head>
 <body>
 <!-- begin -->
 <div id="login">
     <div class="wrapper">
         <div class="login">
-            <form action="#" method="post" class="container offset1 loginform">
+            <form  class="container offset1 loginform">
                 <div id="owl-login">
                     <div class="hand"></div>
                     <div class="hand hand-r"></div>
@@ -24,8 +36,8 @@
                     <input type="hidden" name="_csrf" value="9IAtUxV2CatyxHiK2LxzOsT6wtBE6h8BpzOmk=">
                     <div class="control-group">
                         <div class="controls">
-                            <label for="email" class="control-label fa fa-envelope"></label>
-                            <input id="email" type="email" name="email" placeholder="Email" tabindex="1"
+                            <label for="userName" class="control-label fa fa-user"></label>
+                            <input id="userName" type="text" name="userName" placeholder="Username" tabindex="1"
                                    autofocus="autofocus" class="form-control input-medium">
                         </div>
                     </div>
@@ -36,24 +48,16 @@
                                    class="form-control input-medium">
                         </div>
                     </div>
+                    <div id="login_fail" style="color: red;display: none">鐧诲綍澶辫触锛岃閲嶈瘯</div>
                 </div>
-                <div class="form-actions"><a href="#" tabindex="5" class="btn pull-left btn-link text-muted">Forgot
-                    password?</a><a href="#" tabindex="6" class="btn btn-link text-muted">Sign Up</a>
-                    <button type="submit" tabindex="4" class="btn btn-primary">Login</button>
+                <div class="form-actions"><a href="#" tabindex="5" class="btn pull-left btn-link text-muted">
+                    蹇樿瀵嗙爜?</a><a href="register.html" tabindex="6" class="btn btn-link text-muted">娉ㄥ唽</a>
+                    <button type="button" onclick="loginSubmit()" tabindex="4" class="btn btn-primary">鐧诲綍</button>
                 </div>
             </form>
         </div>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script>
-        $(function () {
-            $('#login #password').focus(function () {
-                $('#owl-login').addClass('password');
-            }).blur(function () {
-                $('#owl-login').removeClass('password');
-            });
-        });
-    </script>
+
 </div>
 <!-- end -->
 </body>

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -81,7 +82,8 @@ public class UserRest {
                     UserToken userToken = userTokenService.findUserTokenByUserName(userName);
                     userToken.setToken(token);
                     userTokenService.save(userToken);
-                    return ReturnUtil.success(mapper.createObjectNode().put("token", token));
+                    UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
+                    return ReturnUtil.success(mapper.createObjectNode().put("token", token).put("nickName",userInfo.getNickName()));
                 } else {
                     return ReturnUtil.error("密码错误！");
                 }
@@ -166,6 +168,25 @@ public class UserRest {
             return ReturnUtil.error("用户名已被占用！");
         }
     }
+
+    /**
+     * 根据token判断是否之前登录过
+     * @param token
+     * @return
+     */
+    @GetMapping(value = "/checkToken")
+    public JsonNode checkLogin(@CookieValue(name = "circle_token") String token) {
+        ObjectMapper mapper = new ObjectMapper();
+        UserToken userToken = userTokenService.findUserTokenByToken(token);
+        if (userToken!=null){
+            String userName = userToken.getUserName();
+            UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
+            return ReturnUtil.success(mapper.createObjectNode().putPOJO("userInfo",userInfo));
+        }else {
+            return ReturnUtil.error("token错误");
+        }
+    }
+
 
     private boolean existUserName(String userName) {
         if (StringUtil.isNotNull(userName)) {
