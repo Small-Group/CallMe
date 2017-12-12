@@ -1,14 +1,14 @@
-package com.small.group.sfy.domain.user;
+package com.small.group.sfy.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by yq on 2017/12/3.
+ * Created by yq on 2017/12/12.
  */
-@Entity(name = "user")
-public class User implements Serializable {
+@Entity(name = "clique_link_user")
+public class CliqueLinkUser  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,8 +19,14 @@ public class User implements Serializable {
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
-    @Column(name = "pass_word", nullable = false)
-    private String passWord;
+    @Column(name = "serial_num", nullable = false, unique = true)
+    private String serialNum;
+
+    @Column(name = "delete")
+    private String delete;
+
+    @Column(name = "exit")
+    private String exit;// 0：自己退出，1：被T出，2：圈子被删除
 
     @Column(name = "create_time", nullable = false)
     private Date createTime;
@@ -44,12 +50,28 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getSerialNum() {
+        return serialNum;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setSerialNum(String serialNum) {
+        this.serialNum = serialNum;
+    }
+
+    public String getDelete() {
+        return delete;
+    }
+
+    public void setDelete(String delete) {
+        this.delete = delete;
+    }
+
+    public String getExit() {
+        return exit;
+    }
+
+    public void setExit(String exit) {
+        this.exit = exit;
     }
 
     public Date getCreateTime() {
@@ -70,13 +92,14 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "CliqueLinkUser{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
-                ", passWord='" + passWord + '\'' +
+                ", serialNum='" + serialNum + '\'' +
+                ", delete='" + delete + '\'' +
+                ", exit='" + exit + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';
     }
-
 }

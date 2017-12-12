@@ -1,6 +1,6 @@
 package com.small.group.sfy.repository;
 
-import com.small.group.sfy.domain.user.UserInfo;
+import com.small.group.sfy.domain.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -9,5 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
     UserInfo findUserInfoByUserName(String userName);
+
+    UserInfo findUserInfoByNickName(String nickName);
 
 }

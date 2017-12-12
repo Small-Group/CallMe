@@ -1,6 +1,6 @@
 package com.small.group.sfy.repository;
 
-import com.small.group.sfy.domain.user.User;
+import com.small.group.sfy.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

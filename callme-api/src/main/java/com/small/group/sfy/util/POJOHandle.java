@@ -3,7 +3,7 @@ package com.small.group.sfy.util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.small.group.sfy.domain.user.UserInfo;
+import com.small.group.sfy.domain.UserInfo;
 
 import java.util.Date;
 

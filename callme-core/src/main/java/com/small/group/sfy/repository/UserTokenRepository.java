@@ -1,6 +1,6 @@
 package com.small.group.sfy.repository;
 
-import com.small.group.sfy.domain.user.UserToken;
+import com.small.group.sfy.domain.UserToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -2,9 +2,10 @@ package com.small.group.sfy.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.small.group.sfy.domain.user.User;
-import com.small.group.sfy.domain.user.UserInfo;
-import com.small.group.sfy.domain.user.UserToken;
+import com.small.group.sfy.component.CommonService;
+import com.small.group.sfy.domain.User;
+import com.small.group.sfy.domain.UserInfo;
+import com.small.group.sfy.domain.UserToken;
 import com.small.group.sfy.service.UserInfoService;
 import com.small.group.sfy.service.UserService;
 import com.small.group.sfy.service.UserTokenService;
@@ -14,7 +15,6 @@ import com.small.group.sfy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.Date;
 import java.util.UUID;
@@ -36,8 +36,11 @@ public class UserRest {
     @Autowired
     private UserTokenService userTokenService;
 
+    @Autowired
+    private CommonService commonService;
+
     @PostMapping(value = "/register")
-    public JsonNode register( @RequestBody String dataJson) {
+    public JsonNode register(@RequestBody String dataJson) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             JsonNode jsonNode = mapper.readTree(dataJson);
@@ -83,7 +86,7 @@ public class UserRest {
                     userToken.setToken(token);
                     userTokenService.save(userToken);
                     UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
-                    return ReturnUtil.success(mapper.createObjectNode().put("token", token).put("nickName",userInfo.getNickName()));
+                    return ReturnUtil.success(mapper.createObjectNode().put("token", token).put("nickName", userInfo.getNickName()));
                 } else {
                     return ReturnUtil.error("密码错误！");
                 }
@@ -98,7 +101,7 @@ public class UserRest {
     @GetMapping(value = "/findUserInfo/{userName}")
     public JsonNode findUserInfo(@RequestHeader(name = "token") String token,
                                  @Param("userName") String userName) {
-        if (checkToken(userName, token)) {
+        if (commonService.checkToken(userName, token)) {
             UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
             return ReturnUtil.success(POJOHandle.handleUserInfo(userInfo));
         }
@@ -112,7 +115,7 @@ public class UserRest {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(dataJson);
             String userName = jsonNode.path("userName").asText();
-            if (checkToken(userName, token)) {
+            if (commonService.checkToken(userName, token)) {
                 UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
                 userInfoService.save(POJOHandle.handleUserInfo(dataJson, userInfo));
                 return ReturnUtil.success();
@@ -131,7 +134,7 @@ public class UserRest {
             JsonNode jsonNode = mapper.readTree(dataJson);
             String userName = jsonNode.path("userName").asText();
             String passWord = jsonNode.path("passWord").asText();
-            if (checkToken(userName, token)) {
+            if (commonService.checkToken(userName, token)) {
                 User user = userService.findUserByUserName(userName);
                 user.setPassWord(passWord);
                 user.setUpdateTime(new Date());
@@ -147,7 +150,7 @@ public class UserRest {
     @GetMapping(value = "/delete/{userName}")
     public JsonNode deleteUser(@RequestHeader(name = "token") String token,
                                @Param("userName") String userName) {
-        if (checkToken(userName, token)) {
+        if (commonService.checkToken(userName, token)) {
             User user = userService.findUserByUserName(userName);
             UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
             UserToken userToken = userTokenService.findUserTokenByUserName(userName);
@@ -169,24 +172,16 @@ public class UserRest {
         }
     }
 
-    /**
-     * 根据token判断是否之前登录过
-     * @param token
-     * @return
-     */
-    @GetMapping(value = "/checkToken")
-    public JsonNode checkLogin(@CookieValue(name = "circle_token") String token) {
-        ObjectMapper mapper = new ObjectMapper();
-        UserToken userToken = userTokenService.findUserTokenByToken(token);
-        if (userToken!=null){
-            String userName = userToken.getUserName();
-            UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
-            return ReturnUtil.success(mapper.createObjectNode().putPOJO("userInfo",userInfo));
-        }else {
-            return ReturnUtil.error("token错误");
+    @GetMapping(value = "/check/nickName")
+    public JsonNode existNickName(@Param("nickName") String nickName) {
+        if (StringUtil.isNotNull(nickName)) {
+            UserInfo userInfo = userInfoService.findUserInfoByNickName(nickName);
+            if (userInfo == null) {
+                return ReturnUtil.success();
+            }
         }
+        return ReturnUtil.error("昵称已被占用！");
     }
-
 
     private boolean existUserName(String userName) {
         if (StringUtil.isNotNull(userName)) {
@@ -198,11 +193,4 @@ public class UserRest {
         return false;
     }
 
-    private boolean checkToken(String userName, String token) {
-        UserToken userToken = userTokenService.findUserTokenByUserName(userName);
-        if (userToken != null && userToken.getToken().equals(token)) {
-            return true;
-        }
-        return false;
-    }
 }

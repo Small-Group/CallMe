@@ -1,6 +1,6 @@
 package com.small.group.sfy.service;
 
-import com.small.group.sfy.domain.user.User;
+import com.small.group.sfy.domain.User;
 import com.small.group.sfy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

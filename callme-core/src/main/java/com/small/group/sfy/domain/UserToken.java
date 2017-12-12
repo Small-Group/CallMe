@@ -1,4 +1,4 @@
-package com.small.group.sfy.domain.user;
+package com.small.group.sfy.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;

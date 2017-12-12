@@ -1,4 +1,4 @@
-package com.small.group.sfy.domain.user;
+package com.small.group.sfy.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class UserInfo implements Serializable {
     @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
-    @Column(name = "nick_name")
+    @Column(name = "nick_name", nullable = false, unique = true)
     private String nickName;
 
     @Column(name = "name")

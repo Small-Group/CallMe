@@ -1,6 +1,6 @@
 package com.small.group.sfy.service;
 
-import com.small.group.sfy.domain.user.UserInfo;
+import com.small.group.sfy.domain.UserInfo;
 import com.small.group.sfy.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,4 +25,10 @@ public class UserInfoService {
     public UserInfo findUserInfoByUserName(String userName) {
         return userInfoRepository.findUserInfoByUserName(userName);
     }
+
+    public UserInfo findUserInfoByNickName(String nickName) {
+        return userInfoRepository.findUserInfoByNickName(nickName);
+    }
+
+
 }
