@@ -29,15 +29,15 @@ public class CliqueLinkUserService {
     }
 
     public List<CliqueLinkUser> findCliqueLinkUsersByUserName(String userName) {
-        return cliqueLinkUserRepository.findCliqueLinkUsersByUserNameAndDeleteIsNull(userName);
+        return cliqueLinkUserRepository.findCliqueLinkUsersByUserNameAndDeletedIsNull(userName);
     }
 
     public List<CliqueLinkUser> findCliqueLinkUsersBySerialNum(String serialNum) {
-        return cliqueLinkUserRepository.findCliqueLinkUsersBySerialNumAndDeleteIsNull(serialNum);
+        return cliqueLinkUserRepository.findCliqueLinkUsersBySerialNumAndDeletedIsNull(serialNum);
     }
 
     public CliqueLinkUser findCliqueLinkUserByUserNameAndSerialNum(String userName,String serialNum){
-        return cliqueLinkUserRepository.findCliqueLinkUserByUserNameAndSerialNumAndDeleteIsNull(userName,serialNum);
+        return cliqueLinkUserRepository.findCliqueLinkUserByUserNameAndSerialNumAndDeletedIsNull(userName,serialNum);
     }
 
 }

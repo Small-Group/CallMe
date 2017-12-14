@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface CliqueLinkUserRepository extends JpaRepository<CliqueLinkUser, Long> {
 
-    List<CliqueLinkUser> findCliqueLinkUsersByUserNameAndDeleteIsNull(String userName);
+    List<CliqueLinkUser> findCliqueLinkUsersByUserNameAndDeletedIsNull(String userName);
 
-    List<CliqueLinkUser> findCliqueLinkUsersBySerialNumAndDeleteIsNull(String serialNum);
+    List<CliqueLinkUser> findCliqueLinkUsersBySerialNumAndDeletedIsNull(String serialNum);
 
-    CliqueLinkUser   findCliqueLinkUserByUserNameAndSerialNumAndDeleteIsNull(String userName,String serialNum);
+    CliqueLinkUser   findCliqueLinkUserByUserNameAndSerialNumAndDeletedIsNull(String userName,String serialNum);
 
 }
