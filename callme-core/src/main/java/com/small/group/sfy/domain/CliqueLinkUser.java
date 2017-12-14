@@ -22,11 +22,11 @@ public class CliqueLinkUser  implements Serializable {
     @Column(name = "serial_num", nullable = false, unique = true)
     private String serialNum;
 
-    @Column(name = "delete")
-    private String delete;
+    @Column(name = "deleted")
+    private String deleted;
 
-    @Column(name = "exit")
-    private String exit;// 0：自己退出，1：被T出，2：圈子被删除
+    @Column(name = "exited")
+    private String exited;// 0：自己退出，1：被T出，2：圈子被删除
 
     @Column(name = "create_time", nullable = false)
     private Date createTime;
@@ -58,20 +58,20 @@ public class CliqueLinkUser  implements Serializable {
         this.serialNum = serialNum;
     }
 
-    public String getDelete() {
-        return delete;
+    public String getDeleted() {
+        return deleted;
     }
 
-    public void setDelete(String delete) {
-        this.delete = delete;
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
     }
 
-    public String getExit() {
-        return exit;
+    public String getExited() {
+        return exited;
     }
 
-    public void setExit(String exit) {
-        this.exit = exit;
+    public void setExited(String exited) {
+        this.exited = exited;
     }
 
     public Date getCreateTime() {
@@ -96,8 +96,8 @@ public class CliqueLinkUser  implements Serializable {
                 "id=" + id +
                 ", userName='" + userName + '\'' +
                 ", serialNum='" + serialNum + '\'' +
-                ", delete='" + delete + '\'' +
-                ", exit='" + exit + '\'' +
+                ", deleted='" + deleted + '\'' +
+                ", exited='" + exited + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

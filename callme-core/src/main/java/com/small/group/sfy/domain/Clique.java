@@ -22,6 +22,9 @@ public class Clique implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @Column(name = "icon")
+    private String icon;
+
     @Column(name = "creator", nullable = false)
     private String creator;
 
@@ -55,6 +58,14 @@ public class Clique implements Serializable {
         this.name = name;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
     public String getCreator() {
         return creator;
     }
@@ -85,6 +96,7 @@ public class Clique implements Serializable {
                 "id=" + id +
                 ", serialNum='" + serialNum + '\'' +
                 ", name='" + name + '\'' +
+                ", icon='" + icon + '\'' +
                 ", creator='" + creator + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
