@@ -1,24 +1,24 @@
-$().ready(function() {
+$().ready(function () {
 // 在键盘按下并释放及提交后验证提交表单
     $("#registerForm").validate({
-        submitHandler:function(form){
+        submitHandler: function (form) {
             registerSubmit();
         },
         rules: {
             userName: {
-                required:true,
+                required: true,
                 //isUserNameExist:true
                 remote: {
-                    url: "user/check/",     //后台处理程序
+                    url: "user/checkUserName",     //后台处理程序
                     type: "get",               //数据发送方式
                     dataType: "json",           //接受数据格式
                     data: {                     //要传递的数据
-                        userName: function() {
+                        userName: function () {
                             return $("#userName").val();
                         }
                     },
-                    dataFilter: function(data, type) {
-                        var retData=JSON.parse(data);
+                    dataFilter: function (data, type) {
+                        var retData = JSON.parse(data);
                         if (retData.code == 0) {
                             return true;
                         } else if (retData.code == -1) {
@@ -28,7 +28,7 @@ $().ready(function() {
                     }
                 }
             },
-            nickName:"required",
+            nickName: "required",
             passWord: {
                 required: true,
                 minlength: 5
@@ -42,7 +42,7 @@ $().ready(function() {
         messages: {
             userName: {
                 required: "请输入用户名",
-                remote:"用户名已存在",
+                remote: "用户名已存在",
                 minlength: "用户名必需由两个字母组成"
             },
             nickName: {
@@ -59,7 +59,7 @@ $().ready(function() {
                 equalTo: "两次密码输入不一致"
             }
         },
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             console.debug(error);
             console.debug(element);
             error.appendTo(element.parent());
@@ -68,7 +68,7 @@ $().ready(function() {
 });
 
 /**
-jQuery.validator.addMethod("isUserNameExist", function(value, element) {
+ jQuery.validator.addMethod("isUserNameExist", function(value, element) {
     console.debug("username:: "+value);
     var userNameExist;
     $.ajax({
@@ -101,11 +101,12 @@ function registerSubmit() {
     var user = new Object();
     user.userName = $("#userName").val();
     user.passWord = $("#passWord").val();
+    user.nickName = $("#nickName").val();
     dataJson = JSON.stringify(user);
     $.ajax({
         url: "user/register",
         dataType: "json",
-        type:"POST",
+        type: "POST",
         data: dataJson,
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
@@ -117,6 +118,7 @@ function registerSubmit() {
         }
     })
 }
+
 function updateInfoSubmit() {
     var user = new Object();
     user.userName = $("#userName").val();
@@ -134,14 +136,14 @@ function updateInfoSubmit() {
     $.ajax({
         url: "user/register",
         dataType: "json",
-        type:"POST",
+        type: "POST",
         data: dataJson,
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             if (retData.code === 0) {
                 window.location.href = "login.html";
             } else if (retData.code === -1) {
-                console.debug("ret: "+retData.code);
+                console.debug("ret: " + retData.code);
                 $("#login_btn").after("注册失败，请稍后重试");
             }
         }

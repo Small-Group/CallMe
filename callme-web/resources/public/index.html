@@ -3,65 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>圈子</title>
-    <link href="css/home.css?v=2" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" type="text/css"/>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/template/css/style.css" type="text/css"/>
+    <!-- Style -->
+    <link rel="stylesheet" href="plugins/template/css/responsive.css" type="text/css"/>
+    <!-- Responsive -->
+    <link rel="stylesheet" href="plugins/font-awesome-4.2.0/css/font-awesome.css" type="text/css"/>
+
+    <!-- Script -->
+    <script type="text/javascript" src="plugins/template/js/modernizr.js"></script>
+    <script type="text/javascript" src="plugins/jQuery/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="plugins/template/js/script.js"></script>-->
+    <script type="text/javascript" src="plugins/bootstrap/bootstrap.min.js"></script>
+    <!--<script type="text/javascript" src="plugins/template/js/enscroll.js"></script>-->
+    <!--<script type="text/javascript" src="plugins/template/js/grid-filter.js"></script>-->
     <!--主页js-->
     <script src="js/index.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" style="color: #c9302c">圈子</a>
-        </div>
+<div class="main">
+    <header id="header" class="header">
+    </header>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
+    <aside class="sidebar">
+        <div class="profile-stats">
+            <div class="mini-profile">
+                <span><img src="images/resource/me.jpg" alt=""/></span>
+                <h3>Labrina Scholer</h3>
+                <h6 class="status online"><i></i> Online</h6>
+                <a href="index.html" title="Logout" class="logout red" data-toggle="tooltip" data-placement="right"><i
+                        class="fa fa-power-off"></i></a>
+            </div>
+            <div class="quick-stats">
+                <h5>Today Report</h5>
+                <ul>
+                    <li><span>456<i>Sales</i></span>
+                    </li>
+                    <li><span>2,345<i>Order</i></span>
+                    </li>
+                    <li><span>$120<i>Revenue</i></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="menu-sec">
+            <div id="menu-toogle" class="menus">
+
+            </div>
+            <!-- Menu Sec -->
+        </div>
+    </aside>
+    <!-- Aside Sidebar -->
+    <div class="content-sec">
+        <div class="breadcrumbs">
+            <ul>
+                <li><a href="dashboard.html" title=""><i class="fa fa-home"></i></a>/</li>
+                <li>
+                    <form class="search">
+                        <input id="cliqueNameSearch" type="text" placeholder="搜索圈子..."/>
+                        <button type="button" onclick="searchClique()"><i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </li>
+                <li><a href="javascript:void(0);" onclick="openCreateCliqueCont()" class="icon-btn"><i
+                        class="fa fa-plus green"></i> 创建圈子</a>
+                </li>
+                <li><a href="javascript:void(0);" class="icon-btn"><i class="fa fa-mail-forward blue"></i> 加入圈子</a>
+                </li>
+                <li><a href="javascript:void(0);" class="icon-btn"><i class="fa fa-mail-reply red"></i> 退出圈子</a>
                 </li>
             </ul>
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            <ul class="nav navbar-nav navbar-right">
-                <li id="unLogin"><a href="login.html">登录</a></li>
-                <li >
-                    <a href="register.html">注册</a>
-                </li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
+        </div>
+        <!-- breadcrumbs -->
+        <div id="cliqueContent" class="container">
+        </div>
+    </div>
+</div>
 </body>
 </html>

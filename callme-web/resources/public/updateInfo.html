@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>修改个人信息</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <!--图片上传插件-->
+    <link type="text/css" rel="stylesheet" href="plugins/fileinput/css/fileinput.min.css"/>
+    <script src="plugins/fileinput/js/fileinput.min.js"></script>
+    <script src="plugins/fileinput/js/zh.js"></script>
+    <!--图片上传插件配置-->
+    <script src="js/fileinputConf.js"></script>
+    <style>
+        .control-label + div {
+            height: 59px;
+        }
+
+        /*水平分割线*/
+        hr {
+            height: 30px;
+            border-style: solid;
+            border-color: black;
+            border-width: 1px 0 0 0;
+            border-radius: 20px;
+        }
+
+        hr:before {
+
+            display: block;
+            content: "";
+            height: 30px;
+            margin-top: -31px;
+            border-style: solid;
+            border-color: black;
+            border-width: 0 0 1px 0;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="color: #c9302c">圈子</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="unLogin"><a href="login.html">登录</a></li>
+                <li>
+                    <a href="register.html">注册</a>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div id="updateInfoDiv" class="container">
+
+    <hr>
+    <h3>修改头像</h3>
+    <br>
+    <form class="form-horizontal">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="thumbnail">
+                    <img src="..." alt="...">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-6">
+                <div class="file-loading">
+                    <input id="file-0a" class="file" type="file" multiple data-min-file-count="1">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+    <h3>修改个人信息</h3>
+    <br>
+    <form id="updateInfoForm" class="form-horizontal">
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">姓名</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+            <label for="remark" class="col-sm-2 control-label">备注</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="remark" name="remark">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="school" class="col-sm-2 control-label">学校</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="school">
+            </div>
+            <label for="sexRadio1" class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-4">
+                <label class="radio-inline">
+                    <input type="radio" name="sex" id="sexRadio1" value="male"> 男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="sex" id="sexRadio2" value="female"> 女
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="phone" class="col-sm-2 control-label">手机</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="phone">
+            </div>
+            <label for="landLine" class="col-sm-2 control-label">固定电话</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="landLine">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="qq" class="col-sm-2 control-label">QQ</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="qq">
+            </div>
+            <label for="landLine" class="col-sm-2 control-label">微信</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="wechat">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="company" class="col-sm-2 control-label">公司</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="company">
+            </div>
+            <label for="email" class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <button id="updateInfoSubmit_btn" onclick="updateInfoSubmit()"
+                    class="btn btn-primary col-md-4 col-md-offset-4">确认修改
+            </button>
+        </div>
+        <div id="updateSuccessMsg" class="form-group alert alert-success hidden">
+        <a class="close" data-dismiss="alert">×</a>
+        <strong>Success!</strong>You have successfully done it.
+    </div>
+        <div id="updateFailMsg" class="form-group alert alert-success hidden">
+            <a class="close" data-dismiss="alert">×</a>
+            <strong>Success!</strong>You have successfully done it.
+        </div>
+    </form>
+    </form>
+    <hr>
+</div>
+</body>
+</html>
