@@ -16,6 +16,7 @@ import com.small.group.sfy.util.POJOHandle;
 import com.small.group.sfy.util.ReturnUtil;
 import com.small.group.sfy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -169,7 +170,7 @@ public class UserRest {
     }
 
     @GetMapping(value = "/checkUserName")
-    public JsonNode checkUserName(@PathVariable("userName") String userName) {
+    public JsonNode checkUserName(@Param("userName") String userName) {
         if (!existUserName(userName)) {
             return ReturnUtil.success();
         } else {
