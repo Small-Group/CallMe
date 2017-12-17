@@ -16,10 +16,10 @@ public class CliqueLinkUser  implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "user_name", nullable = false, unique = true)
+    @Column(name = "user_name", nullable = false)
     private String userName;
 
-    @Column(name = "serial_num", nullable = false, unique = true)
+    @Column(name = "serial_num", nullable = false)
     private String serialNum;
 
     @Column(name = "deleted")

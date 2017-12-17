@@ -5,6 +5,8 @@ import com.small.group.sfy.repository.CliqueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by yq on 2017/12/10.
  */
@@ -28,6 +30,10 @@ public class CliqueService {
 
     public Clique findCliqueByName(String name) {
         return cliqueRepository.findCliqueByName(name);
+    }
+
+    public List<Clique> findCliquesByNameLike(String cliqueName){
+        return cliqueRepository.findCliquesByNameLike(cliqueName);
     }
 
 }

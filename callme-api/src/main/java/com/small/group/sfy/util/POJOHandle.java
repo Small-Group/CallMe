@@ -3,6 +3,7 @@ package com.small.group.sfy.util;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.small.group.sfy.domain.Clique;
 import com.small.group.sfy.domain.UserInfo;
 
 import java.util.Date;
@@ -54,6 +55,18 @@ public class POJOHandle {
         userInfo.setRemark(jsonNode.path("remark").asText());
         userInfo.setUpdateTime(new Date());
         return userInfo;
+    }
+
+    public static JsonNode handleClique(Clique clique) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode = mapper.createObjectNode();
+        objectNode.put("serialNum", clique.getSerialNum());
+        objectNode.put("name", clique.getName());
+        objectNode.put("icon", clique.getIcon());
+        objectNode.put("creator", clique.getCreator());
+        objectNode.put("createTime", clique.getCreateTime().toString());
+        objectNode.put("updateTime", clique.getUpdateTime().toString());
+        return objectNode;
     }
 
 }

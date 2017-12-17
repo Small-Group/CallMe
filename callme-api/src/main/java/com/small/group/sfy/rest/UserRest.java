@@ -16,7 +16,6 @@ import com.small.group.sfy.util.POJOHandle;
 import com.small.group.sfy.util.ReturnUtil;
 import com.small.group.sfy.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -45,7 +44,7 @@ public class UserRest {
 
     /**
      * 用户注册 （需先校验用户名和昵称）
-     * param：json对象，包含：userName passWord nickName
+     * PathVariable：json对象，包含：userName passWord nickName
      */
     @PostMapping(value = "/register")
     public JsonNode register(@RequestBody String dataJson) {
@@ -80,7 +79,7 @@ public class UserRest {
 
     /**
      * 用户登录
-     * param：json对象，包含：userName passWord
+     * PathVariable：json对象，包含：userName passWord
      * return：用户信息,圈子列表
      */
     @PostMapping(value = "/login")
@@ -124,7 +123,7 @@ public class UserRest {
     }
 
     @GetMapping(value = "/findUserInfo/{userName}")
-    public JsonNode findUserInfo(@Param("userName") String userName) {
+    public JsonNode findUserInfo(@PathVariable("userName") String userName) {
         UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
         return ReturnUtil.success(POJOHandle.handleUserInfo(userInfo));
     }
@@ -161,7 +160,7 @@ public class UserRest {
     }
 
     @GetMapping(value = "/delete/{userName}")
-    public JsonNode deleteUser(@Param("userName") String userName) {
+    public JsonNode deleteUser(@PathVariable("userName") String userName) {
         User user = userService.findUserByUserName(userName);
         UserInfo userInfo = userInfoService.findUserInfoByUserName(userName);
         userInfoService.delete(userInfo);
@@ -170,7 +169,7 @@ public class UserRest {
     }
 
     @GetMapping(value = "/checkUserName")
-    public JsonNode checkUserName(@Param("userName") String userName) {
+    public JsonNode checkUserName(@PathVariable("userName") String userName) {
         if (!existUserName(userName)) {
             return ReturnUtil.success();
         } else {
@@ -179,7 +178,7 @@ public class UserRest {
     }
 
     @GetMapping(value = "/check/nickName")
-    public JsonNode existNickName(@Param("nickName") String nickName) {
+    public JsonNode existNickName(@PathVariable("nickName") String nickName) {
         if (StringUtil.isNotNull(nickName)) {
             UserInfo userInfo = userInfoService.findUserInfoByNickName(nickName);
             if (userInfo == null) {
@@ -241,7 +240,7 @@ public class UserRest {
     }
 
     @GetMapping(value = "/findUserInfoList/{serialNum}")
-    public JsonNode findUserInfoList(@Param("serialNum") String serialNum) {
+    public JsonNode findUserInfoList(@PathVariable("serialNum") String serialNum) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = mapper.createArrayNode();
         List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersBySerialNum(serialNum);
@@ -253,8 +252,8 @@ public class UserRest {
     }
 
     @GetMapping(value = "/delete/{userName}/{serialNum}")
-    public JsonNode delete(@Param("userName") String userName,
-                           @Param("serialNum") String serialNum) {
+    public JsonNode delete(@PathVariable("userName") String userName,
+                           @PathVariable("serialNum") String serialNum) {
         if (checkCliqueCreator(userName, serialNum)) {
             Clique clique = cliqueService.findCliqueBySerialNum(serialNum);
             cliqueService.delete(clique);
@@ -271,8 +270,8 @@ public class UserRest {
     }
 
     @PostMapping(value = "/clean/{userName}/{serialNum}")
-    public JsonNode clean(@Param("userName") String userName,
-                          @Param("serialNum") String serialNum,
+    public JsonNode clean(@PathVariable("userName") String userName,
+                          @PathVariable("serialNum") String serialNum,
                           @RequestBody String dataJson) {
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -292,6 +291,17 @@ public class UserRest {
             return ReturnUtil.error(e.toString());
         }
         return ReturnUtil.success();
+    }
+
+    @GetMapping(value = "/search/{cliqueName}")
+    public JsonNode search(@PathVariable("cliqueName") String cliqueName) {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        List<Clique> cliqueList = cliqueService.findCliquesByNameLike(cliqueName);
+        for (Clique clique : cliqueList) {
+            arrayNode.add(POJOHandle.handleClique(clique));
+        }
+        return ReturnUtil.success(arrayNode);
     }
 
     private boolean existUserName(String userName) {
