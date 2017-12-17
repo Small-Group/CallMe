@@ -306,6 +306,44 @@ public class UserRest {
         return ReturnUtil.success(arrayNode);
     }
 
+
+    @PostMapping(value = "/updateClique/{serialNum}")
+    public JsonNode updateClique(@PathVariable("serialNum") String serialNum,
+                                 @RequestBody String dataJson) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode jsonNode = mapper.readTree(dataJson);
+            String cliqueName = jsonNode.path("cliqueName").asText();
+            String cliqueIcon = jsonNode.path("cliqueIcon").asText();
+            Clique cliqueInfo = cliqueService.findCliqueBySerialNum(serialNum);
+            cliqueInfo.setName(cliqueName);
+            cliqueInfo.setIcon(cliqueIcon);
+            cliqueInfo.setUpdateTime(new Date());
+            cliqueService.save(cliqueInfo);
+            return ReturnUtil.success();
+        } catch (Exception e) {
+            return ReturnUtil.error(e.toString());
+        }
+    }
+
+    @GetMapping(value = "/findCliqueList/{userName}")
+    public JsonNode findCliqueList(@PathVariable("userName") String userName) {
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayNode arrayNode = mapper.createArrayNode();
+        List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersByUserName(userName);
+        for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
+            Clique clique = cliqueService.findCliqueBySerialNum(cliqueLinkUser.getSerialNum());
+            ObjectNode objectNode = mapper.createObjectNode();
+            objectNode.put("serialNum", clique.getSerialNum());
+            objectNode.put("name", clique.getName());
+            objectNode.put("creator", clique.getCreator());
+            objectNode.put("createTime", clique.getCreateTime().toString());
+            objectNode.put("updateTime", clique.getUpdateTime().toString());
+            arrayNode.add(objectNode);
+        }
+        return ReturnUtil.success(arrayNode);
+    }
+
     private boolean existUserName(String userName) {
         if (StringUtil.isNotNull(userName)) {
             User user = userService.findUserByUserName(userName);

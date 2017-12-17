@@ -22,7 +22,7 @@ public class ReturnUtil {
         ObjectNode objectNode = mapper.createObjectNode();
         objectNode.put("code", 0);
         objectNode.put("msg", "");
-        objectNode.put("data", jsonNode);
+        objectNode.set("data", jsonNode);
         return objectNode;
     }
 
