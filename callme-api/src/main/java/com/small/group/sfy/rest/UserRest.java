@@ -195,7 +195,7 @@ public class UserRest {
             JsonNode jsonNode = mapper.readTree(dataJson);
             String userName = jsonNode.path("userName").asText();
             Clique clique = new Clique();
-            clique.setName(jsonNode.path("name").asText());
+            clique.setName(jsonNode.path("cliqueName").asText());
             clique.setIcon("www.baidu.com");
             String serialNum = UUID.randomUUID().toString();
             clique.setSerialNum(serialNum);
@@ -297,7 +297,8 @@ public class UserRest {
     public JsonNode search(@PathVariable("cliqueName") String cliqueName) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = mapper.createArrayNode();
-        List<Clique> cliqueList = cliqueService.findCliquesByNameLike(cliqueName);
+        String likeName = "%" + cliqueName + "%";
+        List<Clique> cliqueList = cliqueService.findCliquesByNameLike(likeName);
         for (Clique clique : cliqueList) {
             arrayNode.add(POJOHandle.handleClique(clique));
         }

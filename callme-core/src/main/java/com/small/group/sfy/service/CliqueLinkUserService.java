@@ -20,14 +20,6 @@ public class CliqueLinkUserService {
         cliqueLinkUserRepository.save(cliqueLinkUser);
     }
 
-    public void delete(CliqueLinkUser cliqueLinkUser) {
-        cliqueLinkUserRepository.delete(cliqueLinkUser);
-    }
-
-    public void delete(List<CliqueLinkUser> cliqueLinkUserList){
-        cliqueLinkUserRepository.delete(cliqueLinkUserList);
-    }
-
     public List<CliqueLinkUser> findCliqueLinkUsersByUserName(String userName) {
         return cliqueLinkUserRepository.findCliqueLinkUsersByUserNameAndDeletedIsNull(userName);
     }
