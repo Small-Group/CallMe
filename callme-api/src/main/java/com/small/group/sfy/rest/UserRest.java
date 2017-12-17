@@ -306,6 +306,18 @@ public class UserRest {
         return ReturnUtil.success(arrayNode);
     }
 
+    @GetMapping(value = "/quit/{userName}/{serialNum}")
+    public JsonNode quit(@PathVariable("userName") String userName,
+                         @PathVariable("serialNum") String serialNum) {
+        CliqueLinkUser cliqueLinkUser = cliqueLinkUserService.findCliqueLinkUserByUserNameAndSerialNum(
+                userName, serialNum);
+        cliqueLinkUser.setDeleted("true");
+        cliqueLinkUser.setUpdateTime(new Date());
+        cliqueLinkUser.setExited("0");
+        cliqueLinkUserService.save(cliqueLinkUser);
+        return ReturnUtil.success();
+    }
+
     private boolean existUserName(String userName) {
         if (StringUtil.isNotNull(userName)) {
             User user = userService.findUserByUserName(userName);
