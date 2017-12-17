@@ -50,12 +50,12 @@ function getCliqueList() {
         var cliqueName=clique.name;
         var cliqueSerialNum=clique.serialNum;
         $("#menu-toogle").append('<div class="single-menu">'+
-            '<h2><a title="" href="javascript:void(0);" onclick="loadCliqueUsersPage('+cliqueSerialNum+')"><i class="fa fa-heart-o"></i><span>'+cliqueName+'</span></a></h2>\n' +
+            '<h2><a title="" href="javascript:void(0);" onclick="loadCliqueUsersPage(\''+cliqueSerialNum+'\')"><i class="fa fa-heart-o"></i><span>'+cliqueName+'</span></a></h2>\n' +
             '</div>')
     }
 }
 
-/*加载右侧页面*/
+/*加载圈子页面*/
 function loadCliqueUsersPage(serialNum) {
     $.ajax({
         url: "user/findUserInfoList/"+serialNum,
@@ -66,6 +66,9 @@ function loadCliqueUsersPage(serialNum) {
             if (retData.code === 0) {
                var userInfo=retData.data;
                 $("#cliqueContent").empty();
+                $("#cliqueContent").append('<div class="row">\n' +
+                    '    <button onclick="quitClique(\''+serialNum+'\')" class="btn btn-warning">退出圈子</button>\n' +
+                    '</div>');
                for(var i=0;i<userInfo.length;i++){
                    $("#cliqueContent").append('<div class="col-md-2">\n' +
                        '                <div class="widget-area no-padding">\n' +
@@ -106,7 +109,7 @@ function createClique() {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             if (retData.code === 0) {
-                console.log('xx==='+retData);
+                refreshCliqueList();
             }
         }
     })
@@ -132,6 +135,7 @@ function searchClique() {
                         '                                                <th>圈子名称</th>\n' +
                         '                                                <th>创建者</th>\n' +
                         '                                                <th>创建时间</th>\n' +
+                        '                                                <th>操作</th>\n' +
                         '                                            </tr>\n' +
                         '                                        </thead>\n' +
                         '                                        <tbody id="cliqueList">\n' +
@@ -142,12 +146,16 @@ function searchClique() {
                 }
                 var cliqueList=retData.data;
                 $("#cliqueList").empty();
+                //var name=''+userName;
                 for(var i=0;i<cliqueList.length;i++){
+                    //var serialNum=''+cliqueList[i].serialNum;
                      $("#cliqueList").append('<tr>\n' +
                          '                                                <td>'+(i+1)+'</td>\n' +
                          '                                                <td>'+cliqueList[i].name+'</td>\n' +
                          '                                                <td>'+cliqueList[i].creator+'</td>\n' +
                          '                                                <td>'+cliqueList[i].updateTime+'</td>\n' +
+                         ' <td><button class="btn btn-success" onclick="joinClique('+'\''+cliqueList[i].serialNum+'\''+','+'\''+userName+'\''+ ')">加入圈子</button></td>'+
+                         /*' <td><button class="btn btn-success" onclick="joinClique('+serialNum+','+name+')">加入圈子</button></td>'+*/
                          '                                            </tr>');
                 }
                 }
@@ -156,6 +164,52 @@ function searchClique() {
     })
 }
 
+/*加入圈子*/
+function joinClique(serialNum,userName) {
+    var data=JSON.stringify({'serialNum':serialNum,'userName':userName});
+    $.ajax({
+        url: "user/join",
+        dataType: "json",
+        type: "POST",
+        data:data,
+        contentType: "application/json; charset=utf-8",
+        success: function (retData) {
+            if (retData.code === 0) {
+                refreshCliqueList();
+            }
+        }
+    })
+}
+/*退出圈子*/
+function quitClique(serialNum) {
+    $.ajax({
+        url: "user/quit/"+userName+"/"+serialNum,
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function (retData) {
+            if (retData.code === 0) {
+                refreshCliqueList();
+            }
+        }
+    })
+}
+/*从服务端获取圈子列表*/
+function refreshCliqueList() {
+    $.ajax({
+        url: "user/findCliqueList/"+userName,
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function (retData) {
+            if (retData.code === 0) {
+                var clique=JSON.stringify(retData.data);
+                setCookie("clique",clique,0.1);
+                window.location.reload();
+            }
+        }
+    })
+}
 function getCookie(c_name)
 {
     if (document.cookie.length>0)
@@ -170,6 +224,13 @@ function getCookie(c_name)
         }
     }
     return ""
+}
+function setCookie(c_name,value,expiredays)
+{
+    var exdate=new Date()
+    exdate.setDate(exdate.getDate()+expiredays)
+    document.cookie=c_name+ "=" +escape(value)+
+        ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
 }
 
 

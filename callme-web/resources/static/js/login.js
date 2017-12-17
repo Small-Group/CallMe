@@ -26,7 +26,6 @@ function loginSubmit() {
                 var clique=JSON.stringify(retData.data.clique);
                 var userInfo=retData.data.userInfo;
                 setCookie("clique",clique,0.1);
-                console.debug("clique: "+clique);
                 var userName=userInfo.userName;
                 var nickName=userInfo.nickName;
                 window.location.href = "index.html?"+"userName="+userName+"&nickName="+nickName;
