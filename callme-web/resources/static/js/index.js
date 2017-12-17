@@ -120,26 +120,38 @@ function searchClique() {
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
-            console.log(retData);
-            if (retData.code === 0) {
-                $("#cliqueContent").append('<div class="col-md-12">\n' +
-                    '                                <div class="widget-area">\n' +
-                    '                                    <h2 class="widget-title"><strong>Table</strong> Style 2</h2>\n' +
-                    '                                    <table class="table table-striped">\n' +
-                    '                                        <thead>\n' +
-                    '                                            <tr>\n' +
-                    '                                                <th>#</th>\n' +
-                    '                                                <th>First Name</th>\n' +
-                    '                                                <th>Last Name</th>\n' +
-                    '                                                <th>Username</th>\n' +
-                    '                                            </tr>\n' +
-                    '                                        </thead>\n' +
-                    '                                        <tbody>\n' +
-                    '                                        </tbody>\n' +
-                    '                                    </table>\n' +
-                    '                                </div>\n' +
-                    '                            </div>')
-            }
+            if (retData.data.length>0) {
+                if($("#tableHead").length==0){
+                    $("#cliqueContent").append('<div id="tableHead" class="col-md-12">\n' +
+                        '                                <div class="widget-area">\n' +
+                        '                                    <h2 class="widget-title"><strong>圈子</strong> 搜索列表</h2>\n' +
+                        '                                    <table class="table table-striped">\n' +
+                        '                                        <thead>\n' +
+                        '                                            <tr>\n' +
+                        '                                                <th>#</th>\n' +
+                        '                                                <th>圈子名称</th>\n' +
+                        '                                                <th>创建者</th>\n' +
+                        '                                                <th>创建时间</th>\n' +
+                        '                                            </tr>\n' +
+                        '                                        </thead>\n' +
+                        '                                        <tbody id="cliqueList">\n' +
+                        '                                        </tbody>\n' +
+                        '                                    </table>\n' +
+                        '                                </div>\n' +
+                        '                            </div>')
+                }
+                var cliqueList=retData.data;
+                $("#cliqueList").empty();
+                for(var i=0;i<cliqueList.length;i++){
+                     $("#cliqueList").append('<tr>\n' +
+                         '                                                <td>'+(i+1)+'</td>\n' +
+                         '                                                <td>'+cliqueList[i].name+'</td>\n' +
+                         '                                                <td>'+cliqueList[i].creator+'</td>\n' +
+                         '                                                <td>'+cliqueList[i].updateTime+'</td>\n' +
+                         '                                            </tr>');
+                }
+                }
+
         }
     })
 }
