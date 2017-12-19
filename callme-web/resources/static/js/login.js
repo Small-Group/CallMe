@@ -25,10 +25,9 @@ function loginSubmit() {
                 $("#loginFailMsg").addClass("hidden");
                 var clique=JSON.stringify(retData.data.clique);
                 var userInfo=retData.data.userInfo;
-                setCookie("clique",clique,0.1);
                 var userName=userInfo.userName;
                 var nickName=userInfo.nickName;
-                window.location.href = "index.html?"+"userName="+userName+"&nickName="+nickName;
+                window.location.href = "clique.html?"+"userName="+userName+"&nickName="+nickName;
             } else if (retData.code === -1) {
                 $("#loginFailMsg").removeClass("hidden");
                 $("#loginFailMsg").addClass("show");
@@ -37,10 +36,10 @@ function loginSubmit() {
     })
 }
 
-function setCookie(c_name,value,expiredays)
+/*function setCookie(c_name,value,expiredays)
 {
     var exdate=new Date()
     exdate.setDate(exdate.getDate()+expiredays)
     document.cookie=c_name+ "=" +escape(value)+
         ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
-}
+}*/

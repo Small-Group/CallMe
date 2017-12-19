@@ -1,10 +1,14 @@
 $().ready(function () {
-    $("#header").load("header.html");
+    //$("#header").load("header.html");
     //checkLogin();
+    userName=getUrlParam("userName");
+    nickName = getUrlParam("nickName");
+    setProfile();
     getCliqueList();
 })
 
-
+var userName;
+var nickName;
 /*登录校验*/
 //TODO
 /*失效，暂时不考虑校验*/
@@ -34,6 +38,13 @@ $().ready(function () {
     }
 }*/
 
+/*设置登录信息*/
+function setProfile() {
+    if(nickName!==null&&nickName!==''){
+        $("#userName").append(nickName+',欢迎您');
+    }
+}
+
 /*获取url后的请求参数*/
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -42,17 +53,28 @@ function getUrlParam(name) {
     return null; //返回参数值
 }
 
-/*从cookie中获取圈子列表*/
+
 function getCliqueList() {
-    var cliqueList=JSON.parse(getCookie('clique'));
-    for (var i=0;i<cliqueList.length;i++){
-        var clique=cliqueList[i];
-        var cliqueName=clique.name;
-        var cliqueSerialNum=clique.serialNum;
-        $("#menu-toogle").append('<div class="single-menu">'+
-            '<h2><a title="" href="javascript:void(0);" onclick="loadCliqueUsersPage(\''+cliqueSerialNum+'\')"><i class="fa fa-heart-o"></i><span>'+cliqueName+'</span></a></h2>\n' +
-            '</div>')
-    }
+    $.ajax({
+        url: "user/findCliqueList/"+userName,
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function (retData) {
+            if (retData.code === 0) {
+                var cliqueList=retData.data;
+                for (var i=0;i<cliqueList.length;i++){
+                    var clique=cliqueList[i];
+                    var cliqueName=clique.name;
+                    var cliqueSerialNum=clique.serialNum;
+                    $("#menu-toogle").append('<div class="single-menu">'+
+                        '<h2><a title="" href="javascript:void(0);" onclick="loadCliqueUsersPage(\''+cliqueSerialNum+'\')"><i class="fa fa-heart-o"></i><span>'+cliqueName+'</span></a></h2>\n' +
+                        '</div>')
+                }
+            }
+        }
+    })
+
 }
 
 /*加载圈子页面*/
@@ -77,7 +99,7 @@ function loadCliqueUsersPage(serialNum) {
                        '                            <h3>'+userInfo[i].nickName+'</h3>\n' +
                        '                            <span><img alt="" src="images/resource/me.jpg"></span>\n' +
                        '                        </div>\n' +
-                       '                        <span class="blue"><i class="fa fa-map-marker"></i>San Francisco</span>\n' +
+                       '                        <span class="blue"><i class="fa fa-phone"></i>'+userInfo[i].phone+'</span>\n' +
                        '                    </div>\n' +
                        '                    <!-- My Profile Widget -->\n' +
                        '                </div>\n' +
@@ -109,7 +131,7 @@ function createClique() {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             if (retData.code === 0) {
-                refreshCliqueList();
+                window.location.reload();
             }
         }
     })
@@ -154,7 +176,7 @@ function searchClique() {
                          '                                                <td>'+cliqueList[i].name+'</td>\n' +
                          '                                                <td>'+cliqueList[i].creator+'</td>\n' +
                          '                                                <td>'+cliqueList[i].updateTime+'</td>\n' +
-                         ' <td><button class="btn btn-success" onclick="joinClique('+'\''+cliqueList[i].serialNum+'\''+','+'\''+userName+'\''+ ')">加入圈子</button></td>'+
+                         ' <td><button class="btn btn-success" onclick="joinClique('+'\''+cliqueList[i].serialNum+'\',\''+userName+'\''+ ')">加入圈子</button></td>'+
                          /*' <td><button class="btn btn-success" onclick="joinClique('+serialNum+','+name+')">加入圈子</button></td>'+*/
                          '                                            </tr>');
                 }
@@ -175,7 +197,7 @@ function joinClique(serialNum,userName) {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             if (retData.code === 0) {
-                refreshCliqueList();
+                window.location.reload();
             }
         }
     })
@@ -189,28 +211,40 @@ function quitClique(serialNum) {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             if (retData.code === 0) {
-                refreshCliqueList();
-            }
-        }
-    })
-}
-/*从服务端获取圈子列表*/
-function refreshCliqueList() {
-    $.ajax({
-        url: "user/findCliqueList/"+userName,
-        dataType: "json",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function (retData) {
-            if (retData.code === 0) {
-                var clique=JSON.stringify(retData.data);
-                setCookie("clique",clique,0.1);
                 window.location.reload();
             }
         }
     })
 }
-function getCookie(c_name)
+/*加载修改个人信息页面*/
+function loadUpdateUserInfoPage() {
+    $("#cliqueContent").empty();
+    $("#cliqueContent").load("update-user-info.html");
+}
+/*加载修改密码页面*/
+function loadUpdatePasswordPage() {
+    $("#cliqueContent").empty();
+    $("#cliqueContent").append('新密码：<input id="password" type="password">'+'<button type="button" class="btn btn-primary" onclick="updatePassword()">确认修改</button>');
+}
+/*修改密码*/
+function updatePassword() {
+    var password=$("#password").val();
+    var dataJson=JSON.stringify({'userName':userName,'passWord':password})
+    $.ajax({
+        url: "user/updatePassWord",
+        dataType: "json",
+        type: "POST",
+        data:dataJson,
+        contentType: "application/json; charset=utf-8",
+        success: function (retData) {
+            if (retData.code === 0) {
+                   alert('修改成功');
+            }
+        }
+    })
+}
+
+/*function getCookie(c_name)
 {
     if (document.cookie.length>0)
     {
@@ -224,14 +258,14 @@ function getCookie(c_name)
         }
     }
     return ""
-}
-function setCookie(c_name,value,expiredays)
+}*/
+/*function setCookie(c_name,value,expiredays)
 {
     var exdate=new Date()
     exdate.setDate(exdate.getDate()+expiredays)
     document.cookie=c_name+ "=" +escape(value)+
         ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
-}
+}*/
 
 
 

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>圈子</title>
+
+    <link rel="stylesheet" href="plugins/bootstrap/bootstrap.min.css" type="text/css"/>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/template/css/style.css" type="text/css"/>
+    <!-- Style -->
+    <link rel="stylesheet" href="plugins/template/css/responsive.css" type="text/css"/>
+    <!-- Responsive -->
+    <link rel="stylesheet" href="plugins/font-awesome-4.2.0/css/font-awesome.css" type="text/css"/>
+
+    <!-- Script -->
+    <script type="text/javascript" src="plugins/template/js/modernizr.js"></script>
+    <script type="text/javascript" src="plugins/jQuery/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="plugins/template/js/script.js"></script>-->
+    <script type="text/javascript" src="plugins/bootstrap/bootstrap.min.js"></script>
+    <!--<script type="text/javascript" src="plugins/template/js/enscroll.js"></script>-->
+    <!--<script type="text/javascript" src="plugins/template/js/grid-filter.js"></script>-->
+    <!--圈子js-->
+    <script src="js/clique.js"></script>
+</head>
+<body>
+<div class="main">
+    <aside class="sidebar">
+        <div class="profile-stats">
+            <div class="mini-profile">
+                <span><img src="images/resource/me.jpg" alt=""/></span>
+                <h3 id="userName"></h3>
+                <h6 class="status online"><i></i> Online</h6>
+                <a href="index.html" title="Logout" class="logout red" data-toggle="tooltip" data-placement="right"><i
+                        class="fa fa-power-off"></i></a>
+            </div>
+            <div class="quick-stats">
+                <a style="color: #fff" href="javascript:void(0)" onclick="loadUpdateUserInfoPage()"><h5>修改个人信息</h5></a>
+                <a style="color: #fff" href="javascript:void(0)" onclick="loadUpdatePasswordPage()"><h5>修改密码</h5></a>
+                <ul>
+                    <li><span>456<i>Sales</i></span>
+                    </li>
+                    <li><span>2,345<i>Order</i></span>
+                    </li>
+                    <li><span>$120<i>Revenue</i></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="menu-sec">
+            <div id="menu-toogle" class="menus">
+                <h5 style="color:#fff">圈子列表</h5>
+            </div>
+            <!-- Menu Sec -->
+        </div>
+    </aside>
+    <!-- Aside Sidebar -->
+    <div class="content-sec">
+        <div class="breadcrumbs">
+            <ul>
+                <li>
+                    <form class="search">
+                        <input id="cliqueNameSearch" type="text" placeholder="搜索圈子..."/>
+                        <button type="button" onclick="searchClique()"><i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </li>
+                <li><a href="javascript:void(0);" onclick="openCreateCliqueCont()" class="icon-btn"><i
+                        class="fa fa-plus green"></i> 创建圈子</a>
+                </li>
+            </ul>
+        </div>
+        <!-- breadcrumbs -->
+        <div id="cliqueContent" class="container">
+        </div>
+    </div>
+</div>
+</body>
+</html>

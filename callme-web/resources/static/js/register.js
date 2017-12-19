@@ -111,44 +111,10 @@ function registerSubmit() {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             if (retData.code === 0) {
-                window.location.href = "login.html";
+                window.location.href = "index.html";
             } else {
                 $("#login_btn").after("注册失败，请稍后重试");
             }
         }
     })
-}
-
-function updateInfoSubmit() {
-    var user = new Object();
-    user.userName = $("#userName").val();
-    user.passWord = $("#passWord").val();
-    user.nickName = $("#nickName").val();
-    user.school = $("#school").val();
-    user.sex = $("#sex").val();
-    user.phone = $("#phone").val();
-    user.landLine = $("#landLine").val();
-    user.qq = $("#qq").val();
-    user.wechat = $("#wechat").val();
-    user.company = $("#company").val();
-    user.email = $("#email").val();
-    dataJson = JSON.stringify(user);
-    $.ajax({
-        url: "user/register",
-        dataType: "json",
-        type: "POST",
-        data: dataJson,
-        contentType: "application/json; charset=utf-8",
-        success: function (retData) {
-            if (retData.code === 0) {
-                window.location.href = "login.html";
-            } else if (retData.code === -1) {
-                console.debug("ret: " + retData.code);
-                $("#login_btn").after("注册失败，请稍后重试");
-            }
-        }
-
-
-    })
-
 }

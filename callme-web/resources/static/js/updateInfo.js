@@ -1,33 +1,19 @@
-$.ready(function () {
-    var username=window.opener.username;
-    var token=window.opener.token;
-    $.ajax({
-        url: "user/findUserInfo/"+username,
-        dataType: "json",
-        type: "GET",
-        data: token,
-        contentType: "application/json; charset=utf-8",
-        success: function (retData) {;
-            if (retData.code === 0) {
-                 userInfoAssign(retData)
-            }else {
-                 /*TODO*/
-            }
-        }
-    })
-})
-
 /*用户信息赋值*/
-function userInfoAssign(retData) {
-    var userInfo = retData.data;
+function userInfoAssign(userInfo) {
+    console.log(userInfo);
     $("#name").val(userInfo.name);
     $("#remark").val(userInfo.remark);
-    //userInfo.sex=$("input[name='sex']:checked").val();
+    if(userInfo.sex=='male'){
+        $("#sexRadio1").attr('checked', 'true');
+    }
+    if(userInfo.sex=='female'){
+        $("#sexRadio2").attr('checked', 'true');
+    }
     $("#school").val(userInfo.school);
     $("#phone").val(userInfo.phone);
     $("#landLine").val(userInfo.landLine);
     $("#qq").val(userInfo.qq);
-    $("#wechat").val(userInfo.wechat);
+    $("#wechat").val(userInfo.weChat);
     $("#company").val(userInfo.company);
     $("#email").val(userInfo.email);
 }
@@ -35,22 +21,28 @@ function userInfoAssign(retData) {
 
 /*用户信息修改提交*/
 function updateInfoSubmit() {
-    var userInfo = new Object();
+    var userName=getUrlParam("userName");
+    var userInfo = {};
+    userInfo.userName=userName;
     userInfo.name=$("#name").val();
     userInfo.remark=$("#remark").val();
-    userInfo.sex=$("input[name='sex']:checked").val();
+    var sex=$("input[name='sex']:checked").val();
+    if(typeof(sex)=="undefined"){
+        sex='';
+    }
+    userInfo.sex=sex;
     userInfo.school=$("#school").val();
     userInfo.phone=$("#phone").val();
     userInfo.landLine=$("#landLine").val();
     userInfo.qq=$("#qq").val();
-    userInfo.wechat=$("#wechat").val();
+    userInfo.weChat=$("#wechat").val();
     userInfo.company=$("#company").val();
     userInfo.email=$("#email").val();
     var dataJson=JSON.stringify(userInfo);
     $.ajax({
         url: "user/updateUserInfo",
         dataType: "json",
-        type: "GET",
+        type: "POST",
         data: dataJson,
         contentType: "application/json; charset=utf-8",
         success: function (retData) {;
