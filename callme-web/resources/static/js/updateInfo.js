@@ -22,8 +22,10 @@ function userInfoAssign(userInfo) {
 /*用户信息修改提交*/
 function updateInfoSubmit() {
     var userName=getUrlParam("userName");
+    var nickName=getUrlParam("nickName");
     var userInfo = {};
     userInfo.userName=userName;
+    userInfo.nickName=nickName;
     userInfo.name=$("#name").val();
     userInfo.remark=$("#remark").val();
     var sex=$("input[name='sex']:checked").val();
