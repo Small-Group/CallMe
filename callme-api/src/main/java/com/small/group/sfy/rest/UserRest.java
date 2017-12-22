@@ -368,6 +368,8 @@ public class UserRest {
         return ReturnUtil.success(arrayNode);
     }
 
+
+
     private boolean existUserName(String userName) {
         if (StringUtil.isNotNull(userName)) {
             User user = userService.findUserByUserName(userName);
