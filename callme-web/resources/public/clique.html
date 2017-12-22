@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="main">
-    <aside class="sidebar">
+    <aside class="sidebar" style="padding-top: 0px">
         <div class="profile-stats">
             <div class="mini-profile">
                 <span><img src="images/resource/me.jpg" alt=""/></span>
@@ -48,24 +48,23 @@
         </div>
         <div class="menu-sec">
             <div id="menu-toogle" class="menus">
-                <h5 style="color:#fff">圈子列表</h5>
+                <h4 style="color:#fff;margin-top: -10px">圈子列表</h4>
+            </div>
+            <div id="createClique_btn" class="single-menu"><h2><a title="" href="javascript:void(0);" onclick="openCreateCliqueCont()"><i style="padding-left: 50%" class="fa fa-plus"></i></a></h2>
             </div>
             <!-- Menu Sec -->
         </div>
     </aside>
     <!-- Aside Sidebar -->
-    <div class="content-sec">
+    <div class="content-sec" style="padding-top: 0px">
         <div class="breadcrumbs">
             <ul>
-                <li>
-                    <form class="search">
+                <li style="width: 100%;padding-left: 20%">
+                    <form class="search" style="width: 60%">
                         <input id="cliqueNameSearch" type="text" placeholder="搜索圈子..."/>
                         <button type="button" onclick="searchClique()"><i class="fa fa-search"></i>
                         </button>
                     </form>
-                </li>
-                <li><a href="javascript:void(0);" onclick="openCreateCliqueCont()" class="icon-btn"><i
-                        class="fa fa-plus green"></i> 创建圈子</a>
                 </li>
             </ul>
         </div>

@@ -67,7 +67,7 @@ function getCliqueList() {
                     var clique=cliqueList[i];
                     var cliqueName=clique.name;
                     var cliqueSerialNum=clique.serialNum;
-                    $("#menu-toogle").append('<div class="single-menu">'+
+                    $("#createClique_btn").append('<div class="single-menu">'+
                         '<h2><a title="" href="javascript:void(0);" onclick="loadCliqueUsersPage(\''+cliqueSerialNum+'\')"><i class="fa fa-heart-o"></i><span>'+cliqueName+'</span></a></h2>\n' +
                         '</div>')
                 }
