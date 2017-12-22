@@ -113,7 +113,16 @@ function loadCliqueUsersPage(serialNum) {
 /*打开创建圈子输入框*/
 function openCreateCliqueCont() {
     $("#cliqueContent").empty();
-    var createClique='<input type="text" id="cliqueName"><button type="button" class="green" onclick="createClique()"><i class="fa fa-plus"></i>创建圈子</button>';
+    var input='<form  class="form-horizontal">'+
+        '<div class="form-group">'+
+        '<label for="cliqueName" class="col-sm-offset-2 col-sm-2 control-label">圈子名称</label>'+
+        '<div class="col-sm-4">'+
+        '<input type="text" class="form-control" id="cliqueName"'+ 'name="cliqueName">'+
+        '</div>'+
+        '</div>'+
+        '</form>';
+    var createClique='<div class="container" style="margin-top: 20%;text-align: center">' +input+
+        '<button type="button" class="btn btn-primary" style="margin-top: 40px" onclick="createClique()">创建圈子</button></div>';
     $("#cliqueContent").append(createClique);
 }
 /*创建圈子提交*/
@@ -145,6 +154,7 @@ function searchClique() {
         type: "GET",
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
+            $("#cliqueContent").empty();
             if (retData.data.length>0) {
                 if($("#tableHead").length==0){
                     $("#cliqueContent").append('<div id="tableHead" class="col-md-12">\n' +
@@ -180,7 +190,9 @@ function searchClique() {
                          /*' <td><button class="btn btn-success" onclick="joinClique('+serialNum+','+name+')">加入圈子</button></td>'+*/
                          '                                            </tr>');
                 }
-                }
+                }else {
+                $("#tableHead").remove();
+            }
 
         }
     })
@@ -224,7 +236,15 @@ function loadUpdateUserInfoPage() {
 /*加载修改密码页面*/
 function loadUpdatePasswordPage() {
     $("#cliqueContent").empty();
-    $("#cliqueContent").append('新密码：<input id="password" type="password">'+'<button type="button" class="btn btn-primary" onclick="updatePassword()">确认修改</button>');
+    var input='<form  class="form-horizontal">'+
+        '<div class="form-group">'+
+        '<label for="password" class="col-sm-offset-2 col-sm-2 control-label">新密码</label>'+
+        '<div class="col-sm-4">'+
+        '<input type="text" class="form-control" id="password"'+ 'name="password">'+
+        '</div>'+
+        '</div>'+
+        '</form>';
+    $("#cliqueContent").append('<div class="container" style="margin-top: 20%;text-align: center">'+input+'<button type="button" class="btn btn-primary" onclick="updatePassword()">确认修改</button></div>');
 }
 /*修改密码*/
 function updatePassword() {
@@ -238,7 +258,7 @@ function updatePassword() {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             if (retData.code === 0) {
-                   alert('修改成功');
+                   $("#cliqueContent").empty();
             }
         }
     })

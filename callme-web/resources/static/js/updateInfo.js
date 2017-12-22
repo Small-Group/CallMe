@@ -49,8 +49,9 @@ function updateInfoSubmit() {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {;
             if (retData.code === 0) {
-                $("#updateSuccessMsg").removeClass("hidden");
-                $("#updateSuccessMsg").addClass("show");
+                // $("#updateSuccessMsg").removeClass("hidden");
+                // $("#updateSuccessMsg").addClass("show");
+                $("#cliqueContent").empty();
             }else {
                 $("#updateFailMsg").removeClass("hidden");
                 $("#updateFailMsg").addClass("show");
