@@ -115,8 +115,8 @@ function openCreateCliqueCont() {
     $("#cliqueContent").empty();
     var input='<form  class="form-horizontal">'+
         '<div class="form-group">'+
-        '<label for="cliqueName" class="col-sm-offset-2 col-sm-2 control-label">圈子名称</label>'+
-        '<div class="col-sm-4">'+
+        '<label for="cliqueName" class="col-sm-offset-3 col-sm-2 control-label">圈子名称</label>'+
+        '<div class="col-sm-3">'+
         '<input type="text" class="form-control" id="cliqueName"'+ 'name="cliqueName">'+
         '</div>'+
         '</div>'+
@@ -238,13 +238,13 @@ function loadUpdatePasswordPage() {
     $("#cliqueContent").empty();
     var input='<form  class="form-horizontal">'+
         '<div class="form-group">'+
-        '<label for="password" class="col-sm-offset-2 col-sm-2 control-label">新密码</label>'+
-        '<div class="col-sm-4">'+
+        '<label for="password" class="col-sm-offset-3 col-sm-2 control-label">新密码</label>'+
+        '<div class="col-sm-3">'+
         '<input type="text" class="form-control" id="password"'+ 'name="password">'+
         '</div>'+
         '</div>'+
         '</form>';
-    $("#cliqueContent").append('<div class="container" style="margin-top: 20%;text-align: center">'+input+'<button type="button" class="btn btn-primary" onclick="updatePassword()">确认修改</button></div>');
+    $("#cliqueContent").append('<div class="container" style="margin-top: 20%;text-align: center">'+input+'<button type="button" style="margin-top: 40px" class="btn btn-primary" onclick="updatePassword()">确认修改</button></div>');
 }
 /*修改密码*/
 function updatePassword() {
