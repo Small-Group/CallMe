@@ -252,23 +252,23 @@ public class UserRest {
         return ReturnUtil.success(arrayNode);
     }
 
-    @GetMapping(value = "/delete/{userName}/{serialNum}")
-    public JsonNode delete(@PathVariable("userName") String userName,
-                           @PathVariable("serialNum") String serialNum) {
-        if (checkCliqueCreator(userName, serialNum)) {
-            Clique clique = cliqueService.findCliqueBySerialNum(serialNum);
-            cliqueService.delete(clique);
-            List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersBySerialNum(serialNum);
-            for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
-                cliqueLinkUser.setDeleted("true");
-                cliqueLinkUser.setExited("2");
-                cliqueLinkUser.setUpdateTime(new Date());
-                cliqueLinkUserService.save(cliqueLinkUser);
-            }
-            return ReturnUtil.success();
-        }
-        return ReturnUtil.error("不是创建者！");
-    }
+//    @GetMapping(value = "/delete/{userName}/{serialNum}")
+//    public JsonNode delete(@PathVariable("userName") String userName,
+//                           @PathVariable("serialNum") String serialNum) {
+//        if (checkCliqueCreator(userName, serialNum)) {
+//            Clique clique = cliqueService.findCliqueBySerialNum(serialNum);
+//            cliqueService.delete(clique);
+//            List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersBySerialNum(serialNum);
+//            for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
+//                cliqueLinkUser.setDeleted("true");
+//                cliqueLinkUser.setExited("2");
+//                cliqueLinkUser.setUpdateTime(new Date());
+//                cliqueLinkUserService.save(cliqueLinkUser);
+//            }
+//            return ReturnUtil.success();
+//        }
+//        return ReturnUtil.error("不是创建者！");
+//    }
 
     @PostMapping(value = "/clean/{userName}/{serialNum}")
     public JsonNode clean(@PathVariable("userName") String userName,
@@ -309,12 +309,24 @@ public class UserRest {
     @GetMapping(value = "/quit/{userName}/{serialNum}")
     public JsonNode quit(@PathVariable("userName") String userName,
                          @PathVariable("serialNum") String serialNum) {
-        CliqueLinkUser cliqueLinkUser = cliqueLinkUserService.findCliqueLinkUserByUserNameAndSerialNum(
-                userName, serialNum);
-        cliqueLinkUser.setDeleted("true");
-        cliqueLinkUser.setUpdateTime(new Date());
-        cliqueLinkUser.setExited("0");
-        cliqueLinkUserService.save(cliqueLinkUser);
+        if (checkCliqueCreator(userName, serialNum)) {
+            Clique clique = cliqueService.findCliqueBySerialNum(serialNum);
+            cliqueService.delete(clique);
+            List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersBySerialNum(serialNum);
+            for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
+                cliqueLinkUser.setDeleted("true");
+                cliqueLinkUser.setExited("2");
+                cliqueLinkUser.setUpdateTime(new Date());
+                cliqueLinkUserService.save(cliqueLinkUser);
+            }
+        } else {
+            CliqueLinkUser cliqueLinkUser = cliqueLinkUserService.findCliqueLinkUserByUserNameAndSerialNum(
+                    userName, serialNum);
+            cliqueLinkUser.setDeleted("true");
+            cliqueLinkUser.setUpdateTime(new Date());
+            cliqueLinkUser.setExited("0");
+            cliqueLinkUserService.save(cliqueLinkUser);
+        }
         return ReturnUtil.success();
     }
 

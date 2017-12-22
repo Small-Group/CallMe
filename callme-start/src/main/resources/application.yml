@@ -6,4 +6,5 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/CallMe?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: a123123
+    password: root
+debug: true
