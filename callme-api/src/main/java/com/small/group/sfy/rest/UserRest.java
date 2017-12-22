@@ -352,23 +352,44 @@ public class UserRest {
 
     @GetMapping(value = "/findCliqueList/{userName}")
     public JsonNode findCliqueList(@PathVariable("userName") String userName) {
-        ObjectMapper mapper = new ObjectMapper();
-        ArrayNode arrayNode = mapper.createArrayNode();
-        List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersByUserName(userName);
-        for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
-            Clique clique = cliqueService.findCliqueBySerialNum(cliqueLinkUser.getSerialNum());
-            ObjectNode objectNode = mapper.createObjectNode();
-            objectNode.put("serialNum", clique.getSerialNum());
-            objectNode.put("name", clique.getName());
-            objectNode.put("creator", clique.getCreator());
-            objectNode.put("createTime", clique.getCreateTime().toString());
-            objectNode.put("updateTime", clique.getUpdateTime().toString());
-            arrayNode.add(objectNode);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            ArrayNode arrayNode = mapper.createArrayNode();
+            List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersByUserName(userName);
+            for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
+                Clique clique = cliqueService.findCliqueBySerialNum(cliqueLinkUser.getSerialNum());
+                ObjectNode objectNode = mapper.createObjectNode();
+                objectNode.put("serialNum", clique.getSerialNum());
+                objectNode.put("name", clique.getName());
+                objectNode.put("creator", clique.getCreator());
+                objectNode.put("createTime", clique.getCreateTime().toString());
+                objectNode.put("updateTime", clique.getUpdateTime().toString());
+                arrayNode.add(objectNode);
+            }
+            return ReturnUtil.success(arrayNode);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return ReturnUtil.success(arrayNode);
+        return null;
     }
 
+    @GetMapping(value = "/countCreate/{userName}")
+    public JsonNode countCreate(@PathVariable("userName") String userName) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode = mapper.createObjectNode();
+        List<Clique> cliqueList = cliqueService.findCliquesByCreator(userName);
+        objectNode.put("count", cliqueList.size());
+        return ReturnUtil.success(objectNode);
+    }
 
+    @GetMapping(value = "/countJoin/{userName}")
+    public JsonNode countJoin(@PathVariable("userName") String userName) {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode objectNode = mapper.createObjectNode();
+        List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersByUserName(userName);
+        objectNode.put("count", cliqueLinkUserList.size());
+        return ReturnUtil.success(objectNode);
+    }
 
     private boolean existUserName(String userName) {
         if (StringUtil.isNotNull(userName)) {

@@ -36,4 +36,8 @@ public class CliqueService {
         return cliqueRepository.findCliquesByNameLike(cliqueName);
     }
 
+    public List<Clique> findCliquesByCreator(String uaerName){
+        return cliqueRepository.findCliquesByCreator(uaerName);
+    }
+
 }

@@ -16,4 +16,6 @@ public interface CliqueRepository extends JpaRepository<Clique, Long> {
 
     List<Clique> findCliquesByNameLike(String name);
 
+    List<Clique> findCliquesByCreator(String userName);
+
 }
