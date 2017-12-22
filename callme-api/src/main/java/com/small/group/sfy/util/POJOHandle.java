@@ -57,7 +57,7 @@ public class POJOHandle {
         return userInfo;
     }
 
-    public static JsonNode handleClique(Clique clique) {
+    public static ObjectNode handleClique(Clique clique) {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode objectNode = mapper.createObjectNode();
         objectNode.put("serialNum", clique.getSerialNum());

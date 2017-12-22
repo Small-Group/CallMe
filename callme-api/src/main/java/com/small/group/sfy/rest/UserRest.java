@@ -294,14 +294,18 @@ public class UserRest {
         return ReturnUtil.success();
     }
 
-    @GetMapping(value = "/search/{cliqueName}")
-    public JsonNode search(@PathVariable("cliqueName") String cliqueName) {
+    @GetMapping(value = "/search/{userName}/{cliqueName}")
+    public JsonNode search(@PathVariable("userName") String userName,
+                           @PathVariable("cliqueName") String cliqueName) {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode arrayNode = mapper.createArrayNode();
         String likeName = "%" + cliqueName + "%";
         List<Clique> cliqueList = cliqueService.findCliquesByNameLike(likeName);
         for (Clique clique : cliqueList) {
-            arrayNode.add(POJOHandle.handleClique(clique));
+            ObjectNode objectNode = POJOHandle.handleClique(clique);
+            CliqueLinkUser cliqueLinkUser = cliqueLinkUserService.findCliqueLinkUserByUserNameAndSerialNum(userName,clique.getSerialNum());
+            objectNode.put("joined",cliqueLinkUser == null ? 0 : 1);// 0：未加入，1：已加入
+            arrayNode.add(objectNode);
         }
         return ReturnUtil.success(arrayNode);
     }
