@@ -170,8 +170,9 @@ function createClique() {
 
 function searchClique() {
     var cliqueName=$("#cliqueNameSearch").val();
+    //userName=getUrlParam("userName");
     $.ajax({
-        url: "user/search/"+cliqueName,
+        url: "user/search/"+userName+"/"+cliqueName,
         dataType: "json",
         type: "GET",
         contentType: "application/json; charset=utf-8",
@@ -189,7 +190,7 @@ function searchClique() {
                         '                                                <th>圈子名称</th>\n' +
                         '                                                <th>创建者</th>\n' +
                         '                                                <th>创建时间</th>\n' +
-                        '                                                <th>操作</th>\n' +
+                        '                                                <th style="text-align: center">操作</th>\n' +
                         '                                            </tr>\n' +
                         '                                        </thead>\n' +
                         '                                        <tbody id="cliqueList">\n' +
@@ -203,14 +204,17 @@ function searchClique() {
                 //var name=''+userName;
                 for(var i=0;i<cliqueList.length;i++){
                     //var serialNum=''+cliqueList[i].serialNum;
-                     $("#cliqueList").append('<tr>\n' +
-                         '                                                <td>'+(i+1)+'</td>\n' +
-                         '                                                <td>'+cliqueList[i].name+'</td>\n' +
-                         '                                                <td>'+cliqueList[i].creator+'</td>\n' +
-                         '                                                <td>'+cliqueList[i].updateTime+'</td>\n' +
-                         ' <td><button class="btn btn-success" onclick="joinClique('+'\''+cliqueList[i].serialNum+'\',\''+userName+'\''+ ')">加入圈子</button></td>'+
-                         /*' <td><button class="btn btn-success" onclick="joinClique('+serialNum+','+name+')">加入圈子</button></td>'+*/
-                         '                                            </tr>');
+                    var tableContent='<tr>\n' +
+                    '<td>'+(i+1)+'</td>\n' +
+                    '<td>'+cliqueList[i].name+'</td>\n' +
+                    '<td>'+cliqueList[i].creator+'</td>\n' +
+                    '<td>'+cliqueList[i].updateTime+'</td>\n';
+                    if(cliqueList[i].joined==1){
+                        tableContent+='<td style="text-align: center"><button class="btn btn-default" disabled="disabled">已加入</button></td></tr>'
+                    }else {
+                        tableContent+='<td style="text-align: center"><button class="btn btn-success" onclick="joinClique('+'\''+cliqueList[i].serialNum+'\',\''+userName+'\''+ ')">加入圈子</button></td></tr>'
+                    }
+                     $("#cliqueList").append(tableContent);
                 }
                 }else {
                 $("#tableHead").remove();
