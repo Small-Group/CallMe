@@ -43,6 +43,28 @@ function setProfile() {
     if(nickName!==null&&nickName!==''){
         $("#userName").append(nickName+',欢迎您');
     }
+    $.ajax({
+        url: "user/countCreate/" + userName,
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function (retData) {
+            if (retData.code === 0) {
+                 $("#createNum").text(retData.data.count);
+            }
+        }
+    })
+    $.ajax({
+        url: "user/countJoin/" + userName,
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function (retData) {
+            if (retData.code === 0) {
+                $("#joinNum").text(retData.data.count);
+            }
+        }
+    })
 }
 
 /*获取url后的请求参数*/
