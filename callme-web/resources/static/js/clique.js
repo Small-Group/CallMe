@@ -68,7 +68,7 @@ function getCliqueList() {
                     var cliqueName=clique.name;
                     var cliqueSerialNum=clique.serialNum;
                     $("#createClique_btn").append('<div class="single-menu">'+
-                        '<h2><a title="" href="javascript:void(0);" onclick="loadCliqueUsersPage(\''+cliqueSerialNum+'\')"><i class="fa fa-heart-o"></i><span>'+cliqueName+'</span></a></h2>\n' +
+                        '<h2><a title="" href="javascript:void(0);" onclick="loadCliqueUsersPage(\''+cliqueSerialNum+'\',this)"><i class="fa fa-heart-o"></i><span>'+cliqueName+'</span></a></h2>\n' +
                         '</div>')
                     $("#createNum").text(retData.data.countJoin);
                     $("#joinNum").text(retData.data.countCreate);
@@ -81,7 +81,9 @@ function getCliqueList() {
 }
 
 /*加载圈子页面*/
-function loadCliqueUsersPage(serialNum) {
+function loadCliqueUsersPage(serialNum,ele) {
+    $("div.single-menu h2").css("background","none repeat scroll 0 0 #383c42");
+    $(ele).parent().css("background","#6a94ff");
     $.ajax({
         url: "user/findUserInfoList/"+serialNum,
         dataType: "json",
@@ -92,7 +94,7 @@ function loadCliqueUsersPage(serialNum) {
                var userInfo=retData.data;
                 $("#cliqueContent").empty();
                 $("#cliqueContent").append('<div class="row">\n' +
-                    '    <button onclick="quitClique(\''+serialNum+'\')" class="btn btn-warning">退出圈子</button>\n' +
+                    '    <button style="margin-left: 3%" onclick="quitClique(\''+serialNum+'\')" class="btn btn-warning">退出圈子</button>\n' +
                     '</div>');
                for(var i=0;i<userInfo.length;i++){
                    $("#cliqueContent").append('<div class="col-md-2">\n' +
@@ -100,7 +102,7 @@ function loadCliqueUsersPage(serialNum) {
                        '                    <div class="my-profile-widget">\n' +
                        '                        <div class="profile-widget-head">\n' +
                        '                            <h3>'+userInfo[i].nickName+'</h3>\n' +
-                       '                            <span><img alt="" src="images/resource/me.jpg"></span>\n' +
+                       '                            <span><a href="javascript:void(0)" onclick="loadUserInfo()"><img style="width: 70px;" alt="" src="images/resource/me.jpg"></a></span>\n' +
                        '                        </div>\n' +
                        '                        <span class="blue"><i class="fa fa-phone"></i>'+userInfo[i].phone+'</span>\n' +
                        '                    </div>\n' +
@@ -125,7 +127,7 @@ function openCreateCliqueCont() {
         '</div>'+
         '</form>';
     var createClique='<div class="container" style="margin-top: 20%;text-align: center">' +input+
-        '<button type="button" class="btn btn-primary" style="margin-top: 40px" onclick="createClique()">创建圈子</button></div>';
+        '<button type="button" class="btn btn-primary" style="margin-top: 40px;margin-left: 8%" onclick="createClique()">创建圈子</button></div>';
     $("#cliqueContent").append(createClique);
 }
 /*创建圈子提交*/
@@ -159,7 +161,6 @@ function searchClique() {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             $("#cliqueContent").empty();
-            if (retData.data.length>0) {
                 if($("#tableHead").length==0){
                     $("#cliqueContent").append('<div id="tableHead" class="col-md-12">\n' +
                         '                                <div class="widget-area">\n' +
@@ -180,26 +181,29 @@ function searchClique() {
                         '                                </div>\n' +
                         '                            </div>')
                 }
+            if (retData.data.length>0){
                 var cliqueList=retData.data;
                 $("#cliqueList").empty();
                 //var name=''+userName;
                 for(var i=0;i<cliqueList.length;i++){
                     //var serialNum=''+cliqueList[i].serialNum;
                     var tableContent='<tr>\n' +
-                    '<td>'+(i+1)+'</td>\n' +
-                    '<td>'+cliqueList[i].name+'</td>\n' +
-                    '<td>'+cliqueList[i].creator+'</td>\n' +
-                    '<td>'+cliqueList[i].updateTime+'</td>\n';
+                        '<td>'+(i+1)+'</td>\n' +
+                        '<td>'+cliqueList[i].name+'</td>\n' +
+                        '<td>'+cliqueList[i].creator+'</td>\n' +
+                        '<td>'+cliqueList[i].updateTime+'</td>\n';
                     if(cliqueList[i].joined==1){
                         tableContent+='<td style="text-align: center"><button class="btn btn-default" disabled="disabled">已加入</button></td></tr>'
                     }else {
                         tableContent+='<td style="text-align: center"><button class="btn btn-success" onclick="joinClique('+'\''+cliqueList[i].serialNum+'\',\''+userName+'\''+ ')">加入圈子</button></td></tr>'
                     }
-                     $("#cliqueList").append(tableContent);
+                    $("#cliqueList").append(tableContent);
                 }
-                }else {
-                $("#tableHead").remove();
+            }else {
+                $("#cliqueList").append("无匹配圈子");
             }
+
+
 
         }
     })
@@ -251,7 +255,7 @@ function loadUpdatePasswordPage() {
         '</div>'+
         '</div>'+
         '</form>';
-    $("#cliqueContent").append('<div class="container" style="margin-top: 20%;text-align: center">'+input+'<button type="button" style="margin-top: 40px" class="btn btn-primary" onclick="updatePassword()">确认修改</button></div>');
+    $("#cliqueContent").append('<div class="container" style="margin-top: 20%;text-align: center">'+input+'<button type="button" style="margin-top: 40px;margin-left: 8%;" class="btn btn-primary" onclick="updatePassword()">确认修改</button></div>');
 }
 /*修改密码*/
 function updatePassword() {
@@ -269,6 +273,9 @@ function updatePassword() {
             }
         }
     })
+}
+function loadUserInfo() {
+    $("#cliqueContent").load("user-info.html");
 }
 
 /*function getCookie(c_name)

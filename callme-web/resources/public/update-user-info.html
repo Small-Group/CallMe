@@ -10,25 +10,8 @@
             height: 59px;
         }
 
-        /*水平分割线*/
-        hr {
-            height: 30px;
-            border-style: solid;
-            border-color: black;
-            border-width: 1px 0 0 0;
-            border-radius: 20px;
-        }
-
-        hr:before {
-
-            display: block;
-            content: "";
-            height: 30px;
-            margin-top: -31px;
-            border-style: solid;
-            border-color: black;
-            border-width: 0 0 1px 0;
-            border-radius: 20px;
+        .form-horizontal label.control-label{
+            text-align: center;!important
         }
     </style>
 <div id="updateInfoDiv" class="container">
@@ -51,25 +34,25 @@
         </div>
     </form>
 -->
-    <hr>
     <h3>修改个人信息</h3>
-    <form id="updateInfoForm" class="form-horizontal">
+    <form id="updateInfoForm" class="form-horizontal" style="margin-top: 20px;padding-left: 5%">
         <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">姓名</label>
+            <label for="name" class="col-sm-1 control-label">姓名</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="name" name="name">
             </div>
-            <label for="remark" class="col-sm-2 control-label">备注</label>
+            <label for="remark" class="col-sm-1 col-sm-offset-1  control-label">备注</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="remark" name="remark">
             </div>
+            <div class="col-sm-1"></div>
         </div>
         <div class="form-group">
-            <label for="school" class="col-sm-2 control-label">学校</label>
+            <label for="school" class="col-sm-1 control-label">学校</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="school">
             </div>
-            <label for="sexRadio1" class="col-sm-2 control-label">性别</label>
+            <label for="sexRadio1" class="col-sm-1 col-sm-offset-1  control-label">性别</label>
             <div class="col-sm-4">
                 <label class="radio-inline">
                     <input type="radio" name="sex" id="sexRadio1" value="male"> 男
@@ -78,40 +61,43 @@
                     <input type="radio" name="sex" id="sexRadio2" value="female"> 女
                 </label>
             </div>
+            <div class="col-sm-1"></div>
         </div>
         <div class="form-group">
-            <label for="phone" class="col-sm-2 control-label">手机</label>
+            <label for="phone" class="col-sm-1  control-label">手机</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="phone">
             </div>
-            <label for="landLine" class="col-sm-2 control-label">固定电话</label>
+            <label for="landLine" class="col-sm-1 col-sm-offset-1  control-label">固话</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="landLine">
             </div>
+            <div class="col-sm-1"></div>
         </div>
         <div class="form-group">
-            <label for="qq" class="col-sm-2 control-label">QQ</label>
+            <label for="qq" class="col-sm-1 control-label">QQ</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="qq">
             </div>
-            <label for="landLine" class="col-sm-2 control-label">微信</label>
+            <label for="landLine" class="col-sm-1 col-sm-offset-1  control-label">微信</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="wechat">
             </div>
-
+            <div class="col-sm-1"></div>
         </div>
         <div class="form-group">
-            <label for="company" class="col-sm-2 control-label">公司</label>
+            <label for="company" class="col-sm-1  control-label">公司</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="company">
             </div>
-            <label for="email" class="col-sm-2 control-label">邮箱</label>
+            <label for="email" class="col-sm-1 col-sm-offset-1  control-label">邮箱</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="email">
             </div>
+            <div class="col-sm-1"></div>
         </div>
         <div class="form-group">
-            <button type="button" onclick="updateInfoSubmit()" class="btn btn-primary col-sm-2 col-sm-offset-5">确认修改</button>
+            <button type="button" onclick="updateInfoSubmit()" class="btn btn-primary col-sm-1 col-sm-offset-5">确认修改</button>
             <div id="updateSuccessMsg" class="col-sm-1 alert alert-success hidden" style="padding-bottom: 6px;padding-top: 6px;">
                 <a class="close" data-dismiss="alert">×</a>
                 <strong>修改成功!</strong>
@@ -121,9 +107,8 @@
                 <strong>修改失败!</strong>请重试.
             </div>
         </div>
-
     </form>
-    <hr>
+    <!--<hr>-->
 </div>
  <script>
      var userName=getUrlParam("userName");

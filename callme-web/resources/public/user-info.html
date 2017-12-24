@@ -1,0 +1,134 @@
+<!--
+<style>
+    .row{
+        height:59px;
+    }
+    .row div{
+        font-size: 14px;
+    }
+    .row label{
+        font-size: 14px;
+    }
+</style>
+<div class="container">
+    <h3>xx的個人信息</h3>
+<div class="row">
+    <label for="name" class="col-sm-2 control-label" style="text-align: right">姓名:</label>
+    <div class="col-sm-4" id="name">
+        xx
+    </div>
+    <label for="remark" class="col-sm-2  control-label" style="text-align: right">备注</label>
+    <div class="col-sm-4" id="remark">
+        xx
+    </div>
+    &lt;!&ndash;<div class="col-sm-1"></div>&ndash;&gt;
+</div>
+<div class="row">
+    <label for="school" class="col-sm-1 control-label">学校</label>
+    <div class="col-sm-4" id="school">
+        school
+    </div>
+    <label for="sex" class="col-sm-1 col-sm-offset-1  control-label">性别</label>
+    <div  class="col-sm-4" id="sex">
+       sex
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+<div class="row">
+    <label for="phone" class="col-sm-1  control-label">手机</label>
+    <div class="col-sm-4" id="phone">
+        1555
+    </div>
+    <label for="landLine" class="col-sm-1 col-sm-offset-1  control-label">固话</label>
+    <div class="col-sm-4" id="landLine">
+        1234
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+<div class="row">
+    <label for="qq" class="col-sm-1 control-label">QQ</label>
+    <div class="col-sm-4" id="qq">
+        91233
+    </div>
+    <label for="wechat" class="col-sm-1 col-sm-offset-1  control-label">微信</label>
+    <div class="col-sm-4" id="wechat">
+        xxasd
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+<div class="row">
+    <label for="company" class="col-sm-1  control-label">公司</label>
+    <div class="col-sm-4" id="company">
+        company
+    </div>
+    <label for="email" class="col-sm-1 col-sm-offset-1  control-label">邮箱</label>
+    <div class="col-sm-4" id="email">
+        xx@qq.com
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+</div>-->
+<style>
+    .widget-area ul li i{
+        float: none;
+        margin-left: 50%;
+    }
+</style>
+<div class="widget-area" style="margin-top: 10px;padding-bottom: 10px">
+    <div class="full-report">
+        <div class="ribbon-wrapper">
+            <div class="ribbon-design red">Profile</div>
+        </div>
+        <div class="user"><span><img alt="" src="images/resource/me.jpg"></span>
+            <h3 id="nickName"></h3><i id="remark"></i>
+        </div>
+        <ul style="margin-top: 10px">
+            <li><span class="fa fa-user"></span>姓名<i id="name"></i>
+            </li>
+            <li><span class="fa fa-home"></span>学校<i id="school"></i>
+            </li>
+            <li><span class="fa fa-male"></span>性别<i id="sex"></i>
+            </li>
+            <li><span class="fa fa-mobile-phone"></span>手机<i id="phone"></i>
+            </li>
+            <li><span class="fa fa-phone"></span>固话<i id="landLine"></i>
+            </li>
+            <li><span class="fa fa-qq"></span>QQ&nbsp;&nbsp;<i id="qq"></i>
+            </li>
+            <li><span class="fa fa-wechat"></span>微信<i id="wechat"></i>
+            </li>
+            <li><span class="fa fa-briefcase"></span>公司<i id="company"></i>
+            </li>
+            <li><span class="fa fa-briefcase"></span>邮箱<i id="email"></i>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    $.ajax({
+        url: "user/findUserInfo/"+userName,
+        dataType: "json",
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        success: function (retData) {
+            if (retData.code === 0) {
+                var userInfo=retData.data;
+                $("#nickName").text(userInfo.nickName);
+                $("#name").text(userInfo.name);
+                $("#remark").text(userInfo.remark);
+                if(userInfo.sex=="male"){
+                    $("#sex").text("男");
+                }else if(userInfo.sex=="female"){
+                    $("#sex").text("女");
+                }
+                $("#school").text(userInfo.school);
+                $("#phone").text(userInfo.phone);
+                $("#landLine").text(userInfo.landLine);
+                $("#qq").text(userInfo.qq);
+                $("#wechat").text(userInfo.weChat);
+                $("#company").text(userInfo.company);
+                $("#email").text(userInfo.email);
+            }
+        }
+    })
+</script>

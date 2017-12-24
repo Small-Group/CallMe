@@ -1,6 +1,5 @@
 /*用户信息赋值*/
 function userInfoAssign(userInfo) {
-    console.log(userInfo);
     $("#name").val(userInfo.name);
     $("#remark").val(userInfo.remark);
     if(userInfo.sex=='male'){
