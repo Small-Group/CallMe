@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -42,6 +43,9 @@ public class UserRest {
 
     @Autowired
     private CliqueLinkUserService cliqueLinkUserService;
+
+    public static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 
     /**
      * 用户注册 （需先校验用户名和昵称）
@@ -102,13 +106,7 @@ public class UserRest {
                     List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersByUserName(userName);
                     for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
                         Clique clique = cliqueService.findCliqueBySerialNum(cliqueLinkUser.getSerialNum());
-                        ObjectNode objectNode = mapper.createObjectNode();
-                        objectNode.put("name", clique.getName());
-                        objectNode.put("serialNum", clique.getSerialNum());
-                        objectNode.put("creator", clique.getCreator());
-                        objectNode.put("createTime", clique.getCreateTime().toString());
-                        objectNode.put("updateTime", clique.getUpdateTime().toString());
-                        arrayNode.add(objectNode);
+                        arrayNode.add(POJOHandle.handleClique(clique));
                     }
                     returnNode.set("clique", arrayNode);
                     return ReturnUtil.success(returnNode);
@@ -366,13 +364,7 @@ public class UserRest {
             returnNode.put("countJoin", cliqueList.size());
             for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
                 Clique clique = cliqueService.findCliqueBySerialNum(cliqueLinkUser.getSerialNum());
-                ObjectNode objectNode = mapper.createObjectNode();
-                objectNode.put("serialNum", clique.getSerialNum());
-                objectNode.put("name", clique.getName());
-                objectNode.put("creator", clique.getCreator());
-                objectNode.put("createTime", clique.getCreateTime().toString());
-                objectNode.put("updateTime", clique.getUpdateTime().toString());
-                arrayNode.add(objectNode);
+                arrayNode.add(POJOHandle.handleClique(clique));
             }
             returnNode.set("cliqueList",arrayNode);
             return ReturnUtil.success(returnNode);

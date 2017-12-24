@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.small.group.sfy.domain.Clique;
 import com.small.group.sfy.domain.UserInfo;
+import com.small.group.sfy.rest.UserRest;
 
 import java.util.Date;
 
@@ -64,8 +65,8 @@ public class POJOHandle {
         objectNode.put("name", clique.getName());
         objectNode.put("icon", clique.getIcon());
         objectNode.put("creator", clique.getCreator());
-        objectNode.put("createTime", clique.getCreateTime().toString());
-        objectNode.put("updateTime", clique.getUpdateTime().toString());
+        objectNode.put("createTime", UserRest.formatter.format(clique.getCreateTime()));
+        objectNode.put("updateTime", UserRest.formatter.format(clique.getUpdateTime()));
         return objectNode;
     }
 
