@@ -115,7 +115,13 @@
                 var userInfo=retData.data;
                 $("#nickName").text(userInfo.nickName);
                 $("#name").text(userInfo.name);
-                $("#remark").text(userInfo.remark);
+                console.log(userInfo.remark=="");
+                if(userInfo.remark==""){
+                    console.log("xx");
+                    $("#remark").html('<i id="remark">&nbsp;</i>');
+                }else {
+                    $("#remark").text(userInfo.remark);
+                }
                 if(userInfo.sex=="male"){
                     $("#sex").text("男");
                 }else if(userInfo.sex=="female"){
