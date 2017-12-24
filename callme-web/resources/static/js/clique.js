@@ -43,28 +43,6 @@ function setProfile() {
     if(nickName!==null&&nickName!==''){
         $("#userName").append(nickName+',欢迎您');
     }
-    $.ajax({
-        url: "user/countCreate/" + userName,
-        dataType: "json",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function (retData) {
-            if (retData.code === 0) {
-                 $("#createNum").text(retData.data.count);
-            }
-        }
-    })
-    $.ajax({
-        url: "user/countJoin/" + userName,
-        dataType: "json",
-        type: "GET",
-        contentType: "application/json; charset=utf-8",
-        success: function (retData) {
-            if (retData.code === 0) {
-                $("#joinNum").text(retData.data.count);
-            }
-        }
-    })
 }
 
 /*获取url后的请求参数*/
@@ -84,7 +62,7 @@ function getCliqueList() {
         contentType: "application/json; charset=utf-8",
         success: function (retData) {
             if (retData.code === 0) {
-                var cliqueList=retData.data;
+                var cliqueList=retData.data.cliqueList;
                 for (var i=0;i<cliqueList.length;i++){
                     var clique=cliqueList[i];
                     var cliqueName=clique.name;
@@ -92,6 +70,9 @@ function getCliqueList() {
                     $("#createClique_btn").append('<div class="single-menu">'+
                         '<h2><a title="" href="javascript:void(0);" onclick="loadCliqueUsersPage(\''+cliqueSerialNum+'\')"><i class="fa fa-heart-o"></i><span>'+cliqueName+'</span></a></h2>\n' +
                         '</div>')
+                    $("#createNum").text(retData.data.countJoin);
+                    $("#joinNum").text(retData.data.countCreate);
+
                 }
             }
         }
