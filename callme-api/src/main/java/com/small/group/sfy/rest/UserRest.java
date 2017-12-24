@@ -358,8 +358,12 @@ public class UserRest {
     public JsonNode findCliqueList(@PathVariable("userName") String userName) {
         try {
             ObjectMapper mapper = new ObjectMapper();
+            ObjectNode returnNode = mapper.createObjectNode();
             ArrayNode arrayNode = mapper.createArrayNode();
             List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersByUserName(userName);
+            returnNode.put("countCreate", cliqueLinkUserList.size());
+            List<Clique> cliqueList = cliqueService.findCliquesByCreator(userName);
+            returnNode.put("countJoin", cliqueList.size());
             for (CliqueLinkUser cliqueLinkUser : cliqueLinkUserList) {
                 Clique clique = cliqueService.findCliqueBySerialNum(cliqueLinkUser.getSerialNum());
                 ObjectNode objectNode = mapper.createObjectNode();
@@ -370,29 +374,12 @@ public class UserRest {
                 objectNode.put("updateTime", clique.getUpdateTime().toString());
                 arrayNode.add(objectNode);
             }
-            return ReturnUtil.success(arrayNode);
+            returnNode.set("cliqueList",arrayNode);
+            return ReturnUtil.success(returnNode);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    @GetMapping(value = "/countCreate/{userName}")
-    public JsonNode countCreate(@PathVariable("userName") String userName) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode = mapper.createObjectNode();
-        List<Clique> cliqueList = cliqueService.findCliquesByCreator(userName);
-        objectNode.put("count", cliqueList.size());
-        return ReturnUtil.success(objectNode);
-    }
-
-    @GetMapping(value = "/countJoin/{userName}")
-    public JsonNode countJoin(@PathVariable("userName") String userName) {
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode objectNode = mapper.createObjectNode();
-        List<CliqueLinkUser> cliqueLinkUserList = cliqueLinkUserService.findCliqueLinkUsersByUserName(userName);
-        objectNode.put("count", cliqueLinkUserList.size());
-        return ReturnUtil.success(objectNode);
     }
 
     private boolean existUserName(String userName) {
