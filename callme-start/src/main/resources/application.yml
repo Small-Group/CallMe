@@ -3,8 +3,17 @@ server:
   context-path: /CallMe
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/CallMe?useUnicode=true&characterEncoding=utf8&useSSL=false
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
     username: root
-    password: root
-#debug: true
+    password: sunniwell
+  h2:
+    console:
+      settings:
+        web-allow-others: true
+      path: /h2-console
+      enabled: true
+#进行该配置后，每次启动程序，程序都会运行resources/db/schema.sql文件，对数据库的结构进行操作。
+#spring.datasource.schema=classpath:db/schema.sql
+#进行该配置后，每次启动程序，程序都会运行resources/db/data.sql文件，对数据库的数据操作。
+#spring.datasource.data=classpath:db/data.sql
